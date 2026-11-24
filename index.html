@@ -3,490 +3,546 @@
 <html lang="zh-Hant">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<meta name="theme-color" content="#f8f3ef">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#f8f5f1">
+<link rel="manifest" href="./manifest.json">
 <title>MY LITTLE JOURNAL</title>
 <style>
 :root{
-  --bg:#f8f5f1;--card:#fffdfb;--pink:#ead2d0;
-  --pink2:#f4e6e3;--brown:#705b55;--text:#514541;
-  --muted:#a99b95;--green:#e8eee5;--line:#eee5df;
+--bg:#f8f5f1;--card:#fffdfb;--pink:#ead2d0;--pink2:#f4e6e3;
+--brown:#705b55;--text:#514541;--muted:#a99b95;--line:#eee5df;
+--green:#e8eee5;--purple:#eae7f0;
 }
 *{box-sizing:border-box}
 body{margin:0;background:var(--bg);color:var(--text);
-  font-family:-apple-system,BlinkMacSystemFont,"Noto Sans TC",sans-serif}
-header{padding:25px 20px 16px}
+font-family:-apple-system,BlinkMacSystemFont,"Noto Sans TC",sans-serif}
+header{padding:24px 19px 14px}
 header small{color:var(--muted);letter-spacing:2px}
 h1{font-size:23px;letter-spacing:2px;margin:7px 0}
-main{padding:0 15px 95px;max-width:680px;margin:auto}
-nav{position:fixed;bottom:0;left:0;right:0;background:#fffdfbf2;
-  border-top:1px solid var(--line);display:flex;justify-content:space-around;
-  padding:9px 2px calc(9px + env(safe-area-inset-bottom));z-index:5}
-nav button{border:0;background:none;color:var(--muted);font-size:11px;padding:5px}
-nav button.active{color:var(--brown);font-weight:700}
+main{padding:0 14px 100px;max-width:700px;margin:auto}
+nav{position:fixed;bottom:0;left:0;right:0;z-index:9;background:#fffdfbf2;
+border-top:1px solid var(--line);display:flex;justify-content:space-around;
+padding:8px 2px calc(8px + env(safe-area-inset-bottom))}
+nav button{background:none;border:0;color:var(--muted);font-size:10px;padding:5px 2px}
+nav button.active{color:var(--brown);font-weight:bold}
 nav span{display:block;font-size:19px;margin-bottom:3px}
 .page{display:none}.page.active{display:block}
 .card{background:var(--card);border:1px solid var(--line);border-radius:18px;
-  padding:16px;margin:12px 0;box-shadow:0 3px 12px #80685b08}
-.row{display:flex;gap:10px;align-items:center}
+padding:15px;margin:11px 0;box-shadow:0 3px 12px #80685b08}
+.row{display:flex;gap:9px;align-items:center}
 .between{justify-content:space-between}
-.grid{display:grid;grid-template-columns:1fr 1fr;gap:10px}
-.stat{background:var(--pink2);border-radius:15px;padding:14px}
+.grid{display:grid;grid-template-columns:1fr 1fr;gap:9px}
+.stat{background:var(--pink2);border-radius:14px;padding:13px;min-width:0}
+.stat strong{display:block;font-size:20px;margin-top:6px;overflow-wrap:anywhere}
 .stat small{color:var(--muted)}
-.stat strong{display:block;font-size:21px;margin-top:7px}
 h2{font-size:18px;margin:18px 3px 10px}
 h3{font-size:15px;margin:0 0 8px}
 p{line-height:1.6}
 small,.muted{color:var(--muted)}
-button,.btn{border:0;border-radius:12px;background:var(--pink2);
-  color:var(--brown);padding:10px 13px;font-size:13px;cursor:pointer}
+button{border:0;border-radius:12px;background:var(--pink2);color:var(--brown);
+padding:10px 12px;font-size:13px;cursor:pointer}
 button.primary{background:var(--brown);color:white}
 button.danger{background:#f7e7e5;color:#a35f58}
-input,select,textarea{width:100%;padding:12px;border:1px solid var(--line);
-  border-radius:11px;background:#fffdfb;color:var(--text);font-size:14px;
-  margin:5px 0 11px}
-textarea{min-height:75px;resize:vertical}
+input,select,textarea{width:100%;padding:11px;border:1px solid var(--line);
+border-radius:11px;background:var(--card);color:var(--text);font-size:14px;margin:5px 0 11px}
+textarea{min-height:65px}
 label{font-size:12px;color:var(--muted)}
 form{margin-top:10px}
+hr{border:0;border-top:1px solid var(--line);margin:12px 0}
+.actions{display:flex;gap:6px;flex-wrap:wrap;margin-top:9px}
+.actions button{padding:7px 10px}
+.bar{height:8px;background:#eee9e5;border-radius:20px;overflow:hidden}
+.bar>div{height:100%;background:#c99e98;border-radius:20px}
+.pill{font-size:11px;background:var(--pink2);padding:4px 8px;border-radius:20px}
+.empty{text-align:center;padding:22px;color:var(--muted)}
 .quads{display:grid;grid-template-columns:1fr 1fr;gap:10px}
-.quad{min-height:125px;border-radius:17px;padding:15px;text-align:left;
-  display:flex;flex-direction:column;justify-content:space-between}
-.quad strong{font-size:15px}.quad small{color:#806f68}
+.quad{height:125px;text-align:left;display:flex;flex-direction:column;
+justify-content:space-between;padding:14px}
 .q1{background:#f1e1de}.q2{background:#e9eee5}
 .q3{background:#f3eadc}.q4{background:#e8e5ef}
-.item{display:flex;gap:12px;align-items:center}
-.item img{width:68px;height:68px;object-fit:cover;border-radius:12px}
-.item .info{flex:1;min-width:0}
-.item .info strong{display:block}
-.pill{font-size:11px;background:var(--pink2);padding:4px 8px;border-radius:20px}
-.actions{display:flex;gap:7px;flex-wrap:wrap;margin-top:9px}
-.actions button{padding:7px 10px}
-hr{border:0;border-top:1px solid var(--line);margin:13px 0}
-.empty{text-align:center;padding:25px;color:var(--muted)}
 .hidden{display:none!important}
+.item{display:flex;gap:11px;align-items:center}
+.item img{width:70px;height:70px;object-fit:cover;border-radius:12px}
+.item .info{flex:1;min-width:0}
+.item strong{display:block}
+.color-options{display:flex;gap:10px;flex-wrap:wrap}
+.color-options button{width:42px;height:42px;border:2px solid white}
 </style>
 </head>
 <body>
 <header>
-  <small>MY LITTLE JOURNAL · MY DAILY LIFE</small>
-  <h1>我的生活手帳 ♡</h1>
-  <div class="muted" id="today"></div>
+<small>MY LITTLE JOURNAL · MY DAILY LIFE</small>
+<h1>我的生活手帳 ♡</h1>
+<div class="muted" id="today"></div>
 </header>
 
 <main>
 <section class="page active" id="home">
-  <div class="card">
-    <div class="row between"><h3>本月總覽</h3><input id="homeMonth" type="month" style="width:145px;margin:0"></div>
-    <div class="grid" style="margin-top:13px">
-      <div class="stat"><small>收入</small><strong id="homeIncome">$0</strong></div>
-      <div class="stat"><small>支出</small><strong id="homeExpense">$0</strong></div>
-      <div class="stat"><small>可用餘額</small><strong id="homeBalance">$0</strong></div>
-      <div class="stat"><small>本月預算</small><strong id="homeBudget">$0</strong></div>
-    </div>
-  </div>
-  <h2>最近記帳</h2>
-  <div class="card" id="recentRecords"></div>
-  <h2>我的小提醒</h2>
-  <div class="card" id="homeReminders">目前沒有提醒 ♡</div>
+<div class="card">
+<div class="row between">
+<h3>本月總覽</h3><input id="homeMonth" type="month" style="width:145px;margin:0">
+</div>
+<div class="grid" style="margin-top:13px">
+<div class="stat"><small>收入</small><strong id="homeIncome">$0</strong></div>
+<div class="stat"><small>支出</small><strong id="homeExpense">$0</strong></div>
+<div class="stat"><small>可用餘額</small><strong id="homeBalance">$0</strong></div>
+<div class="stat"><small>預算剩餘</small><strong id="homeBudgetLeft">$0</strong></div>
+</div>
+</div>
+<h2>本月預算分配</h2>
+<div class="card" id="homeAllocations"></div>
+<h2>最近紀錄</h2>
+<div class="card" id="recentRecords"></div>
+<h2>生活提醒</h2>
+<div class="card" id="homeReminders"></div>
 </section>
 
 <section class="page" id="records">
-  <h2>記帳小本本</h2>
-  <div class="card">
-    <form id="recordForm">
-      <label>收支類型</label>
-      <select id="recordType"><option value="expense">支出</option><option value="income">收入</option></select>
-      <label>金額（可輸入 20+38）</label>
-      <input id="recordAmount" placeholder="例如：20+38" required>
-      <label>分類</label>
-      <input id="recordCategory" placeholder="例如：飲食、交通、薪水" required>
-      <label>日期</label>
-      <input id="recordDate" type="date" required>
-      <label>備註</label>
-      <textarea id="recordNote" placeholder="寫點什麼吧…"></textarea>
-      <button class="primary" type="submit" style="width:100%">儲存紀錄</button>
-    </form>
-  </div>
-  <h2>所有紀錄</h2>
-  <div class="card" id="recordList"></div>
+<h2>記帳小本本</h2>
+<div class="card">
+<form id="recordForm">
+<input type="hidden" id="recordId">
+<label>收支類型</label>
+<select id="recordType"><option value="expense">支出</option><option value="income">收入</option></select>
+<label>金額（支援 20+38）</label>
+<input id="recordAmount" placeholder="例如：20+38" required>
+<label>分類</label><select id="recordCategory"></select>
+<label>日期</label><input id="recordDate" type="date" required>
+<label>付款方式</label>
+<select id="recordSource"><option value="cash">一般可用餘額</option><option value="fund">由基金支付</option></select>
+<label id="fundChooseLabel" class="hidden">使用哪個基金</label>
+<select id="recordFund" class="hidden"></select>
+<label>備註</label><textarea id="recordNote" placeholder="寫點什麼吧…"></textarea>
+<button class="primary" type="submit" style="width:100%">儲存紀錄</button>
+<button type="button" id="cancelEdit" class="hidden" style="width:100%;margin-top:7px">取消編輯</button>
+</form>
+</div>
+<h2>所有紀錄</h2>
+<div class="card" id="recordList"></div>
 </section>
 
 <section class="page" id="funds">
-  <h2>我的基金</h2>
-  <div class="card">
-    <form id="fundForm">
-      <label>基金名稱</label><input id="fundName" placeholder="例如：旅行基金" required>
-      <label>目標金額</label><input id="fundTarget" type="number" min="1" placeholder="10000" required>
-      <button class="primary" style="width:100%">新增基金</button>
-    </form>
-  </div>
-  <div id="fundList"></div>
+<h2>我的基金</h2>
+<div class="card">
+<form id="fundForm">
+<label>基金名稱</label><input id="fundName" placeholder="例如：旅行基金" required>
+<label>目標金額</label><input id="fundTarget" type="number" min="1" required>
+<label>目標日期（選填）</label><input id="fundDue" type="date">
+<button class="primary" style="width:100%">新增基金</button>
+</form>
+</div>
+<div id="fundList"></div>
 </section>
 
 <section class="page" id="stats">
-  <h2>收支統計</h2>
-  <div class="card">
-    <label>選擇月份</label>
-    <input id="statsMonth" type="month">
-    <div class="grid">
-      <div class="stat"><small>收入</small><strong id="statsIncome">$0</strong></div>
-      <div class="stat"><small>支出</small><strong id="statsExpense">$0</strong></div>
-    </div>
-    <hr>
-    <h3>支出分類</h3>
-    <div id="categoryStats"></div>
-  </div>
+<h2>收支統計</h2>
+<div class="card">
+<label>統計月份</label><input id="statsMonth" type="month">
+<div class="grid">
+<div class="stat"><small>收入</small><strong id="statsIncome">$0</strong></div>
+<div class="stat"><small>支出</small><strong id="statsExpense">$0</strong></div>
+</div>
+<hr><h3>分類支出</h3><div id="categoryStats"></div>
+<hr><h3>基金總額</h3><strong id="fundTotal">$0</strong>
+</div>
 </section>
 
 <section class="page" id="shopping">
-  <h2>購物管理 ♡</h2>
-  <p class="muted">先選擇象限，再進入清單查看商品照片。</p>
-  <div class="quads">
-    <button class="quad q1" onclick="openQuadrant('wantUrgent')">
-      <strong>♡ 想要＋急需</strong><small>願望清單</small>
-    </button>
-    <button class="quad q2" onclick="openQuadrant('needUrgent')">
-      <strong>✿ 需要＋急需</strong><small>急需購物</small>
-    </button>
-    <button class="quad q3" onclick="openQuadrant('wantLater')">
-      <strong>☆ 想要＋非急需</strong><small>想買但先存下</small>
-    </button>
-    <button class="quad q4" onclick="openQuadrant('needLater')">
-      <strong>☁ 需要＋非急需</strong><small>非急需購物</small>
-    </button>
-  </div>
-  <div class="card">
-    <h3>購物小統計</h3>
-    <div id="shoppingStats"></div>
-  </div>
-  <div id="quadrantDetail" class="hidden">
-    <div class="row between">
-      <h2 id="quadrantTitle">商品清單</h2>
-      <button onclick="closeQuadrant()">返回四象限</button>
-    </div>
-    <div class="card">
-      <form id="itemForm">
-        <label>商品名稱</label><input id="itemName" required placeholder="想買什麼呢？">
-        <label>預估金額</label><input id="itemPrice" placeholder="例如：299">
-        <label>商品照片（可選）</label><input id="itemPhoto" type="file" accept="image/*">
-        <label>備註</label><textarea id="itemNote" placeholder="尺寸、顏色、購買連結等"></textarea>
-        <label>冷靜期</label>
-        <select id="itemCooldown">
-          <option value="0">不設定</option><option value="7">7 天</option>
-          <option value="14">14 天</option><option value="30">30 天</option>
-        </select>
-        <button class="primary" style="width:100%">新增商品</button>
-      </form>
-    </div>
-    <div id="itemList"></div>
-  </div>
+<h2>購物管理 ♡</h2>
+<p class="muted">先選擇象限，再進入清單查看商品照片。</p>
+<div class="quads">
+<button class="quad q1" onclick="openQuadrant('wantUrgent')"><strong>♡ 想要＋急需</strong><small>願望清單</small></button>
+<button class="quad q2" onclick="openQuadrant('needUrgent')"><strong>✿ 需要＋急需</strong><small>急需購物</small></button>
+<button class="quad q3" onclick="openQuadrant('wantLater')"><strong>☆ 想要＋非急需</strong><small>想買但先存下</small></button>
+<button class="quad q4" onclick="openQuadrant('needLater')"><strong>☁ 需要＋非急需</strong><small>非急需購物</small></button>
+</div>
+<div class="card"><h3>購物統計</h3><div id="shoppingStats"></div></div>
+<div id="quadrantDetail" class="hidden">
+<div class="row between"><h2 id="quadrantTitle">商品清單</h2><button onclick="closeQuadrant()">返回</button></div>
+<div class="card">
+<form id="itemForm">
+<label>商品名稱</label><input id="itemName" required>
+<label>預估金額</label><input id="itemPrice" placeholder="例如：299">
+<label>主要照片</label><input id="itemPhoto" type="file" accept="image/*">
+<label>備註／購買連結</label><textarea id="itemNote"></textarea>
+<label>冷靜期</label>
+<select id="itemCooldown"><option value="0">不設定</option><option value="7">7 天</option><option value="14">14 天</option><option value="30">30 天</option></select>
+<button class="primary" style="width:100%">新增商品</button>
+</form>
+</div>
+<div id="itemList"></div>
+<h2>已購買紀錄</h2><div id="boughtList"></div>
+</div>
 </section>
 
 <section class="page" id="settings">
-  <h2>設定</h2>
-  <div class="card">
-    <h3>每月預算</h3>
-    <input id="budgetInput" type="number" min="0" placeholder="設定每月預算">
-    <button class="primary" onclick="saveBudget()">儲存預算</button>
-  </div>
-  <div class="card">
-    <h3>資料備份</h3>
-    <p class="muted">將紀錄、基金、購物清單和設定匯出成 JSON 檔案。</p>
-    <button class="primary" onclick="backup()">匯出備份</button>
-    <hr>
-    <label>還原備份檔案</label>
-    <input type="file" id="restoreFile" accept=".json,application/json">
-    <button onclick="restoreBackup()">還原資料</button>
-  </div>
-  <div class="card">
-    <h3>資料儲存說明</h3>
-    <p class="muted">目前使用此瀏覽器的本機儲存。清除網站資料或更換裝置前，請先匯出備份。</p>
-  </div>
+<h2>設定中心</h2>
+<div class="card">
+<h3>每月總預算</h3>
+<label>預算月份</label><input type="month" id="budgetMonth">
+<label>總預算金額</label><input type="number" id="budgetTotal" min="0">
+<button class="primary" onclick="saveBudget()" style="width:100%">儲存總預算</button>
+</div>
+<div class="card">
+<h3>預算分類分配</h3>
+<p class="muted">每個分類的預算加總不可超過本月總預算。</p>
+<div id="allocationEditor"></div>
+<div class="row">
+<input id="newAllocationName" placeholder="新增分類名稱">
+<input id="newAllocationAmount" type="number" placeholder="金額">
+</div>
+<button onclick="addAllocation()" style="width:100%">新增預算分類</button>
+<button class="primary" onclick="saveAllocations()" style="width:100%;margin-top:8px">儲存分類分配</button>
+</div>
+<div class="card">
+<h3>記帳分類管理</h3>
+<div id="categoryEditor"></div>
+<div class="row"><input id="newCategory" placeholder="新增分類"></div>
+<button onclick="addCategory()" style="width:100%">新增記帳分類</button>
+</div>
+<div class="card">
+<h3>外觀主題</h3>
+<div class="color-options">
+<button style="background:#f8f5f1" onclick="setTheme('cream')"></button>
+<button style="background:#f5e8e7" onclick="setTheme('pink')"></button>
+<button style="background:#edf0e9" onclick="setTheme('green')"></button>
+<button style="background:#eeebf4" onclick="setTheme('purple')"></button>
+</div>
+</div>
+<div class="card">
+<h3>日期格式</h3><p class="muted">統一使用 YY/MM/DD 顯示。</p>
+</div>
+<div class="card">
+<h3>資料備份與還原</h3>
+<button class="primary" onclick="backup()" style="width:100%">匯出完整備份</button>
+<label>選擇備份檔案</label><input type="file" id="restoreFile" accept=".json">
+<button onclick="restoreBackup()" style="width:100%">還原資料</button>
+<p class="muted">請定期備份。清除瀏覽器資料或更換裝置可能造成資料遺失。</p>
+</div>
 </section>
 </main>
 
 <nav>
-  <button class="active" data-page="home"><span>⌂</span>首頁</button>
-  <button data-page="records"><span>▤</span>記帳</button>
-  <button data-page="funds"><span>♡</span>基金</button>
-  <button data-page="stats"><span>◷</span>統計</button>
-  <button data-page="shopping"><span>✿</span>購物</button>
-  <button data-page="settings"><span>⚙</span>設定</button>
+<button class="active" data-page="home"><span>⌂</span>首頁</button>
+<button data-page="records"><span>▤</span>記帳</button>
+<button data-page="funds"><span>♡</span>基金</button>
+<button data-page="stats"><span>◷</span>統計</button>
+<button data-page="shopping"><span>✿</span>購物</button>
+<button data-page="settings"><span>⚙</span>設定</button>
 </nav>
 
 <script>
-const KEY="myLittleJournal_v2";
-const defaults={
-  records:[],funds:[],items:[],bought:[],budget:5000
+const KEY="mlj_complete_v3";
+const DEFAULT={
+records:[],funds:[],items:[],bought:[],categories:["飲食","交通","購物","生活用品","娛樂","其他","薪水","獎金"],
+budgets:{},allocations:{},theme:"cream"
 };
 let data;
-try{
-  data={...defaults,...JSON.parse(localStorage.getItem(KEY)||"{}")};
-}catch(e){data={...defaults};}
+try{data={...DEFAULT,...JSON.parse(localStorage.getItem(KEY)||"{}")}}
+catch(e){data={...DEFAULT}}
 let currentQuadrant="wantUrgent";
-
 const $=id=>document.getElementById(id);
-const money=n=>"$"+Number(n||0).toLocaleString("zh-TW");
 const today=()=>new Date().toISOString().slice(0,10);
-const monthNow=()=>today().slice(0,7);
+const thisMonth=()=>today().slice(0,7);
+const money=n=>"NT$"+Number(n||0).toLocaleString("zh-TW");
 const dateText=d=>d?d.slice(2).replaceAll("-","/"):"";
-function save(){
-  try{localStorage.setItem(KEY,JSON.stringify(data));}
-  catch(e){alert("儲存空間可能不足，請先備份資料或減少照片。");}
+const qNames={
+wantUrgent:"想要＋急需｜願望清單",needUrgent:"需要＋急需｜急需購物",
+wantLater:"想要＋非急需｜想買但先存下",needLater:"需要＋非急需｜非急需購物"
+};
+function save(){try{localStorage.setItem(KEY,JSON.stringify(data))}
+catch(e){alert("儲存空間不足，請先備份或減少照片。")}}
+function esc(s){return String(s??"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]))}
+function calc(s){
+s=String(s).replace(/\s/g,"");
+if(!s||!/^[0-9+\-*/().]+$/.test(s))throw Error("金額算式格式錯誤");
+const t=s.match(/\d*\.?\d+|[()+\-*/]/g);if(!t||t.join("")!==s)throw Error("金額格式錯誤");
+let i=0;
+function f(){let x=t[i++];if(x==="("){let n=e();if(t[i++]!==")")throw Error();return n}
+if(x==="-")return-f();if(x==="+")return f();return Number(x)}
+function m(){let n=f();while(t[i]==="*"||t[i]==="/"){let o=t[i++],b=f();if(o==="/"&&!b)throw Error("不能除以零");n=o==="*"?n*b:n/b}return n}
+function e(){let n=m();while(t[i]==="+"||t[i]==="-"){let o=t[i++],b=m();n=o==="+"?n+b:n-b}return n}
+let n=e();if(i!==t.length||!Number.isFinite(n))throw Error("算式錯誤");return Math.round(n*100)/100;
 }
-function calc(v){
-  const s=String(v).replace(/\s/g,"");
-  if(!s||!/^[0-9+\-*/().]+$/.test(s))throw Error("金額格式錯誤");
-  const tokens=s.match(/\d*\.?\d+|[()+\-*/]/g);
-  if(!tokens||tokens.join("")!==s)throw Error("金額格式錯誤");
-  let i=0;
-  function factor(){
-    let t=tokens[i++];
-    if(t==="("){let n=expr();if(tokens[i++]!==")")throw Error();return n;}
-    if(t==="-")return-factor();
-    if(t==="+")return factor();
-    let n=Number(t);if(!Number.isFinite(n))throw Error();return n;
-  }
-  function term(){
-    let n=factor();
-    while(tokens[i]==="*"||tokens[i]==="/"){
-      let op=tokens[i++],b=factor();
-      if(op==="/"&&b===0)throw Error("不能除以 0");
-      n=op==="*"?n*b:n/b;
-    }return n;
-  }
-  function expr(){
-    let n=term();
-    while(tokens[i]==="+"||tokens[i]==="-"){
-      let op=tokens[i++],b=term();n=op==="+"?n+b:n-b;
-    }return n;
-  }
-  let result=expr();if(i!==tokens.length||!Number.isFinite(result))throw Error("算式錯誤");
-  return Math.round(result*100)/100;
+function monthBudget(m){return Number(data.budgets[m]||0)}
+function allocations(m){return data.allocations[m]||{}}
+function allocatedTotal(m){return Object.values(allocations(m)).reduce((a,b)=>a+Number(b||0),0)}
+function expenses(m){return data.records.filter(r=>r.type==="expense"&&r.date.startsWith(m))}
+function categorySpent(m,c){return expenses(m).filter(r=>r.category===c).reduce((s,r)=>s+r.amount,0)}
+function totalSpent(m){return expenses(m).reduce((s,r)=>s+r.amount,0)}
+function incomeTotal(){return data.records.filter(r=>r.type==="income").reduce((s,r)=>s+r.amount,0)}
+function cashBalance(){
+let income=incomeTotal();
+let cashExpenses=data.records.filter(r=>r.type==="expense"&&r.source!=="fund").reduce((s,r)=>s+r.amount,0);
+let deposits=data.funds.reduce((s,f)=>s+f.history.filter(h=>h.type==="deposit").reduce((a,h)=>a+h.amount,0),0);
+let withdrawals=data.funds.reduce((s,f)=>s+f.history.filter(h=>h.type==="withdraw").reduce((a,h)=>a+h.amount,0),0);
+return income-cashExpenses-deposits+withdrawals;
 }
 function showPage(id){
-  document.querySelectorAll(".page").forEach(p=>p.classList.toggle("active",p.id===id));
-  document.querySelectorAll("nav button").forEach(b=>b.classList.toggle("active",b.dataset.page===id));
-  render();
+document.querySelectorAll(".page").forEach(p=>p.classList.toggle("active",p.id===id));
+document.querySelectorAll("nav button").forEach(b=>b.classList.toggle("active",b.dataset.page===id));
+render();
 }
-document.querySelectorAll("nav button").forEach(b=>b.addEventListener("click",()=>showPage(b.dataset.page)));
+document.querySelectorAll("nav button").forEach(b=>b.onclick=()=>showPage(b.dataset.page));
 $("today").textContent=dateText(today());
+$("homeMonth").value=thisMonth();$("statsMonth").value=thisMonth();$("budgetMonth").value=thisMonth();
 $("recordDate").value=today();
-$("homeMonth").value=monthNow();
-$("statsMonth").value=monthNow();
 
-$("recordForm").addEventListener("submit",e=>{
-  e.preventDefault();
-  try{
-    const amount=calc($("recordAmount").value);
-    if(amount<=0)throw Error("金額必須大於 0");
-    data.records.unshift({
-      id:crypto.randomUUID(),type:$("recordType").value,amount,
-      category:$("recordCategory").value.trim(),date:$("recordDate").value,
-      note:$("recordNote").value.trim()
-    });
-    save();e.target.reset();$("recordDate").value=today();render();
-    alert("紀錄已儲存 ♡");
-  }catch(err){alert(err.message||"請檢查金額算式");}
-});
-
-$("fundForm").addEventListener("submit",e=>{
-  e.preventDefault();
-  const name=$("fundName").value.trim(),target=Number($("fundTarget").value);
-  if(!name||target<=0)return alert("請輸入正確資料");
-  data.funds.push({id:crypto.randomUUID(),name,target,balance:0,history:[]});
-  save();e.target.reset();render();
-});
-function fundAction(id,action){
-  const f=data.funds.find(x=>x.id===id);if(!f)return;
-  const raw=prompt(action==="deposit"?"存入金額":"提領金額");
-  if(raw===null)return;
-  let amount;try{amount=calc(raw);}catch(e){return alert("金額格式錯誤");}
-  if(amount<=0)return alert("金額必須大於 0");
-  if(action==="withdraw"&&amount>f.balance)return alert("基金餘額不足");
-  f.balance+=action==="deposit"?amount:-amount;
-  f.history.push({action,amount,date:today()});
-  save();render();
+function updateRecordOptions(){
+$("recordCategory").innerHTML=data.categories.map(c=>`<option>${esc(c)}</option>`).join("");
+$("recordFund").innerHTML=data.funds.map(f=>`<option value="${f.id}">${esc(f.name)}</option>`).join("");
+}
+$("recordType").onchange=()=>{
+let income=$("recordType").value==="income";
+$("recordSource").disabled=income;
+if(income){$("recordSource").value="cash";$("recordSource").onchange()}
+};
+$("recordSource").onchange=()=>{
+let on=$("recordSource").value==="fund"&&$("recordType").value==="expense";
+$("recordFund").classList.toggle("hidden",!on);
+$("fundChooseLabel").classList.toggle("hidden",!on);
+};
+$("recordForm").onsubmit=e=>{
+e.preventDefault();
+let amount;try{amount=calc($("recordAmount").value)}catch(err){return alert(err.message)}
+if(amount<=0)return alert("金額必須大於 0");
+let id=$("recordId").value;
+let old=data.records.find(r=>r.id===id);
+let source=$("recordType").value==="income"?"cash":$("recordSource").value;
+let fundId=source==="fund"?$("recordFund").value:null;
+if(source==="fund"){
+let fund=data.funds.find(f=>f.id===fundId);
+let oldRefund=old&&old.source==="fund"&&old.fundId===fundId?old.amount:0;
+if(!fund||fund.balance+oldRefund<amount)return alert("基金餘額不足");
+}
+let record={id:id||crypto.randomUUID(),type:$("recordType").value,amount,
+category:$("recordCategory").value,date:$("recordDate").value,
+note:$("recordNote").value,source,fundId};
+if(old){
+if(old.source==="fund"&&old.type==="expense"){
+let f=data.funds.find(x=>x.id===old.fundId);if(f)f.balance+=old.amount;
+}
+data.records=data.records.filter(r=>r.id!==id);
+}
+if(record.source==="fund"){
+let f=data.funds.find(x=>x.id===fundId);f.balance-=amount;
+}
+data.records.unshift(record);save();resetRecord();render();alert("紀錄已儲存 ♡");
+};
+function resetRecord(){
+$("recordForm").reset();$("recordId").value="";$("recordDate").value=today();
+$("cancelEdit").classList.add("hidden");$("recordSource").onchange();
+}
+$("cancelEdit").onclick=resetRecord;
+function editRecord(id){
+let r=data.records.find(x=>x.id===id);if(!r)return;
+$("recordId").value=r.id;$("recordType").value=r.type;$("recordAmount").value=r.amount;
+$("recordCategory").value=r.category;$("recordDate").value=r.date;
+$("recordNote").value=r.note||"";$("recordSource").value=r.source||"cash";
+updateRecordOptions();$("recordCategory").value=r.category;
+$("recordFund").value=r.fundId||"";$("recordSource").onchange();
+$("cancelEdit").classList.remove("hidden");showPage("records");window.scrollTo(0,0);
 }
 function deleteRecord(id){
-  if(!confirm("確定刪除這筆紀錄？"))return;
-  data.records=data.records.filter(x=>x.id!==id);save();render();
+if(!confirm("確定刪除這筆紀錄？"))return;
+let r=data.records.find(x=>x.id===id);
+if(r&&r.source==="fund"&&r.type==="expense"){
+let f=data.funds.find(x=>x.id===r.fundId);if(f)f.balance+=r.amount;
+}
+data.records=data.records.filter(x=>x.id!==id);save();render();
 }
 function renderRecords(){
-  const list=$("recordList");
-  if(!data.records.length){list.innerHTML='<div class="empty">還沒有記帳紀錄 ♡</div>';return;}
-  list.innerHTML=data.records.map(r=>`
-    <div class="row between">
-      <div><strong>${esc(r.category)}</strong><br><small>${dateText(r.date)} · ${esc(r.note||"無備註")}</small></div>
-      <div style="text-align:right"><strong>${r.type==="income"?"+":"−"}${money(r.amount)}</strong>
-      <br><button class="danger" onclick="deleteRecord('${r.id}')">刪除</button></div>
-    </div><hr>`).join("");
+$("recordList").innerHTML=data.records.length?data.records.map(r=>`
+<div class="row between"><div><strong>${esc(r.category)}</strong><br><small>${dateText(r.date)} · ${esc(r.note||"")}${r.source==="fund"?" · 基金支付":""}</small></div>
+<div style="text-align:right"><strong>${r.type==="income"?"+":"−"}${money(r.amount)}</strong>
+<div class="actions"><button onclick="editRecord('${r.id}')">編輯</button><button class="danger" onclick="deleteRecord('${r.id}')">刪除</button></div></div></div><hr>`).join(""):'<div class="empty">還沒有紀錄 ♡</div>';
 }
-function renderFunds(){
-  $("fundList").innerHTML=data.funds.length?data.funds.map(f=>`
-    <div class="card">
-      <div class="row between"><h3>${esc(f.name)}</h3><span class="pill">${Math.min(100,Math.round(f.balance/f.target*100))}%</span></div>
-      <p>${money(f.balance)} / ${money(f.target)}</p>
-      <div style="height:8px;background:#eee;border-radius:10px;overflow:hidden">
-        <div style="height:100%;width:${Math.min(100,f.balance/f.target*100)}%;background:#c99e98"></div>
-      </div>
-      <div class="actions">
-        <button onclick="fundAction('${f.id}','deposit')">存入</button>
-        <button onclick="fundAction('${f.id}','withdraw')">提領</button>
-        <button class="danger" onclick="deleteFund('${f.id}')">刪除基金</button>
-      </div>
-    </div>`).join(""):'<div class="card empty">還沒有基金</div>';
+$("fundForm").onsubmit=e=>{
+e.preventDefault();let name=$("fundName").value.trim(),target=Number($("fundTarget").value);
+if(!name||target<=0)return alert("請輸入正確資料");
+data.funds.push({id:crypto.randomUUID(),name,target,due:$("fundDue").value,balance:0,history:[]});
+save();e.target.reset();updateRecordOptions();render();
+};
+function fundAction(id,type){
+let f=data.funds.find(x=>x.id===id);if(!f)return;
+let raw=prompt(type==="deposit"?"存入金額（從可用餘額轉入）":"提領金額（轉回可用餘額）");
+if(raw===null)return;let n;try{n=calc(raw)}catch(e){return alert("金額格式錯誤")}
+if(n<=0)return alert("金額必須大於 0");
+if(type==="deposit"&&cashBalance()<n)return alert("可用餘額不足");
+if(type==="withdraw"&&f.balance<n)return alert("基金餘額不足");
+f.balance+=type==="deposit"?n:-n;
+f.history.push({type,amount:n,date:today()});save();render();
 }
 function deleteFund(id){
-  if(!confirm("確定刪除此基金？"))return;
-  data.funds=data.funds.filter(f=>f.id!==id);save();render();
+let f=data.funds.find(x=>x.id===id);if(!f)return;
+if(data.records.some(r=>r.fundId===id))return alert("此基金有記帳紀錄，為避免帳務錯誤，請先處理相關紀錄。");
+if(!confirm("刪除基金？基金餘額會轉回可用餘額。"))return;
+data.funds=data.funds.filter(x=>x.id!==id);save();updateRecordOptions();render();
 }
-function selectedMonth(){return $("homeMonth").value||monthNow();}
-function monthRecords(m){return data.records.filter(r=>r.date.startsWith(m));}
+function renderFunds(){
+$("fundList").innerHTML=data.funds.length?data.funds.map(f=>`
+<div class="card"><div class="row between"><h3>${esc(f.name)}</h3><span class="pill">${Math.min(100,Math.round(f.balance/f.target*100))}%</span></div>
+<p>${money(f.balance)} / ${money(f.target)}</p><div class="bar"><div style="width:${Math.min(100,f.balance/f.target*100)}%"></div></div>
+<small>${f.due?"目標日期："+dateText(f.due):"尚未設定目標日期"}</small>
+<div class="actions"><button onclick="fundAction('${f.id}','deposit')">存入</button><button onclick="fundAction('${f.id}','withdraw')">提領</button><button class="danger" onclick="deleteFund('${f.id}')">刪除</button></div></div>`).join(""):'<div class="card empty">還沒有基金</div>';
+}
+function renderAllocations(m){
+let a=allocations(m),spent=totalSpent(m),budget=monthBudget(m);
+let rows=Object.entries(a);
+$("homeAllocations").innerHTML=rows.length?rows.map(([c,v])=>{
+let used=categorySpent(m,c),pct=v?Math.min(100,used/v*100):0;
+return `<div style="margin:12px 0"><div class="row between"><strong>${esc(c)}</strong><span>${money(used)} / ${money(v)}</span></div><div class="bar"><div style="width:${pct}%"></div></div><small>剩餘 ${money(Number(v)-used)}${used>v?" · 已超支":""}</small></div>`;
+}).join(""):`<div class="empty">尚未設定分類預算，請到設定頁分配 ♡</div>`;
+let unassigned=expenses(m).filter(r=>!Object.hasOwn(a,r.category)).reduce((s,r)=>s+r.amount,0);
+if(unassigned)$("homeAllocations").innerHTML+=`<p class="muted">未分配分類支出：${money(unassigned)}</p>`;
+$("homeAllocations").innerHTML+=`<hr><div class="row between"><strong>本月總預算</strong><strong>${money(budget)}</strong></div><div class="row between"><span>已支出</span><strong>${money(spent)}</strong></div><div class="row between"><span>預算剩餘</span><strong>${money(budget-spent)}</strong></div>`;
+}
 function renderHome(){
-  const rs=monthRecords(selectedMonth());
-  const income=rs.filter(r=>r.type==="income").reduce((s,r)=>s+r.amount,0);
-  const expense=rs.filter(r=>r.type==="expense").reduce((s,r)=>s+r.amount,0);
-  $("homeIncome").textContent=money(income);
-  $("homeExpense").textContent=money(expense);
-  $("homeBalance").textContent=money(income-expense);
-  $("homeBudget").textContent=money(data.budget);
-  const recent=data.records.slice(0,5);
-  $("recentRecords").innerHTML=recent.length?recent.map(r=>
-    `<div class="row between"><span>${esc(r.category)} <small>${dateText(r.date)}</small></span><strong>${r.type==="income"?"+":"−"}${money(r.amount)}</strong></div><hr>`
-  ).join(""):'<div class="empty">還沒有紀錄</div>';
-  const due=data.items.filter(i=>i.cooldownDate&&i.cooldownDate<=today());
-  $("homeReminders").textContent=due.length?`有 ${due.length} 件商品冷靜期已到，可以重新考慮囉。`:"目前沒有到期的冷靜期提醒 ♡";
+let m=$("homeMonth").value||thisMonth(),rs=data.records.filter(r=>r.date.startsWith(m));
+let inc=rs.filter(r=>r.type==="income").reduce((s,r)=>s+r.amount,0);
+let exp=rs.filter(r=>r.type==="expense").reduce((s,r)=>s+r.amount,0);
+$("homeIncome").textContent=money(inc);$("homeExpense").textContent=money(exp);
+$("homeBalance").textContent=money(cashBalance());
+$("homeBudgetLeft").textContent=money(monthBudget(m)-exp);
+renderAllocations(m);
+$("recentRecords").innerHTML=data.records.slice(0,5).map(r=>`<div class="row between"><span>${esc(r.category)} <small>${dateText(r.date)}</small></span><strong>${r.type==="income"?"+":"−"}${money(r.amount)}</strong></div><hr>`).join("")||'<div class="empty">還沒有紀錄</div>';
+let due=data.items.filter(i=>i.cooldownDate&&i.cooldownDate<=today());
+$("homeReminders").textContent=due.length?`有 ${due.length} 件商品冷靜期已到期，可以重新考慮囉。`:"目前沒有到期提醒 ♡";
 }
 function renderStats(){
-  const m=$("statsMonth").value||monthNow(),rs=monthRecords(m);
-  const inc=rs.filter(r=>r.type==="income").reduce((s,r)=>s+r.amount,0);
-  const exp=rs.filter(r=>r.type==="expense").reduce((s,r)=>s+r.amount,0);
-  $("statsIncome").textContent=money(inc);$("statsExpense").textContent=money(exp);
-  const cats={};
-  rs.filter(r=>r.type==="expense").forEach(r=>cats[r.category]=(cats[r.category]||0)+r.amount);
-  const entries=Object.entries(cats).sort((a,b)=>b[1]-a[1]);
-  $("categoryStats").innerHTML=entries.length?entries.map(([k,v])=>
-    `<div class="row between"><span>${esc(k)}</span><strong>${money(v)}</strong></div><hr>`
-  ).join(""):'<div class="empty">這個月還沒有支出</div>';
+let m=$("statsMonth").value||thisMonth(),rs=data.records.filter(r=>r.date.startsWith(m));
+let inc=rs.filter(r=>r.type==="income").reduce((s,r)=>s+r.amount,0);
+let exp=rs.filter(r=>r.type==="expense").reduce((s,r)=>s+r.amount,0);
+$("statsIncome").textContent=money(inc);$("statsExpense").textContent=money(exp);
+let cats={};rs.filter(r=>r.type==="expense").forEach(r=>cats[r.category]=(cats[r.category]||0)+r.amount);
+$("categoryStats").innerHTML=Object.entries(cats).sort((a,b)=>b[1]-a[1]).map(([c,v])=>`<div class="row between"><span>${esc(c)}</span><strong>${money(v)}</strong></div><hr>`).join("")||'<div class="empty">沒有支出資料</div>';
+$("fundTotal").textContent=money(data.funds.reduce((s,f)=>s+f.balance,0));
 }
-const qNames={
-  wantUrgent:"想要＋急需｜願望清單",
-  needUrgent:"需要＋急需｜急需購物",
-  wantLater:"想要＋非急需｜想買但先存下",
-  needLater:"需要＋非急需｜非急需購物"
-};
-function openQuadrant(q){
-  currentQuadrant=q;$("quadrantTitle").textContent=qNames[q];
-  $("quadrantDetail").classList.remove("hidden");renderItems();
-  $("quadrantDetail").scrollIntoView({behavior:"smooth"});
-}
-function closeQuadrant(){$("quadrantDetail").classList.add("hidden");}
-$("itemForm").addEventListener("submit",async e=>{
-  e.preventDefault();
-  const file=$("itemPhoto").files[0];
-  let photo="";
-  if(file){
-    if(file.size>5*1024*1024)return alert("照片請選擇 5MB 以下的檔案");
-    photo=await resizeImage(file);
-  }
-  const cooldown=Number($("itemCooldown").value);
-  const d=new Date();d.setDate(d.getDate()+cooldown);
-  data.items.push({
-    id:crypto.randomUUID(),quadrant:currentQuadrant,
-    name:$("itemName").value.trim(),price:Number($("itemPrice").value)||0,
-    note:$("itemNote").value.trim(),photo,
-    created:today(),cooldownDate:cooldown?d.toISOString().slice(0,10):""
-  });
-  save();e.target.reset();renderItems();renderShoppingStats();
-});
+function openQuadrant(q){currentQuadrant=q;$("quadrantTitle").textContent=qNames[q];$("quadrantDetail").classList.remove("hidden");renderItems();$("quadrantDetail").scrollIntoView({behavior:"smooth"})}
+function closeQuadrant(){$("quadrantDetail").classList.add("hidden")}
 function resizeImage(file){
-  return new Promise(resolve=>{
-    const img=new Image(),url=URL.createObjectURL(file);
-    img.onload=()=>{
-      const scale=Math.min(1,900/Math.max(img.width,img.height));
-      const c=document.createElement("canvas");c.width=img.width*scale;c.height=img.height*scale;
-      c.getContext("2d").drawImage(img,0,0,c.width,c.height);
-      URL.revokeObjectURL(url);resolve(c.toDataURL("image/jpeg",.75));
-    };img.src=url;
-  });
+return new Promise(resolve=>{let img=new Image(),url=URL.createObjectURL(file);
+img.onload=()=>{let scale=Math.min(1,900/Math.max(img.width,img.height)),c=document.createElement("canvas");
+c.width=img.width*scale;c.height=img.height*scale;c.getContext("2d").drawImage(img,0,0,c.width,c.height);
+URL.revokeObjectURL(url);resolve(c.toDataURL("image/jpeg",.75))};img.src=url});
 }
+$("itemForm").onsubmit=async e=>{
+e.preventDefault();let file=$("itemPhoto").files[0],photo="";
+if(file){if(file.size>5*1024*1024)return alert("照片請選擇 5MB 以下");photo=await resizeImage(file)}
+let days=Number($("itemCooldown").value),d=new Date();d.setDate(d.getDate()+days);
+data.items.push({id:crypto.randomUUID(),quadrant:currentQuadrant,name:$("itemName").value.trim(),
+price:Number($("itemPrice").value)||0,note:$("itemNote").value,photo,created:today(),
+cooldownDate:days?d.toISOString().slice(0,10):""});
+save();e.target.reset();renderItems();renderShoppingStats();
+};
 function renderItems(){
-  const items=data.items.filter(i=>i.quadrant===currentQuadrant);
-  $("itemList").innerHTML=items.length?items.map(i=>`
-    <div class="card">
-      <div class="item">
-        ${i.photo?`<img src="${i.photo}" alt="商品照片">`:'<div style="width:68px;height:68px;border-radius:12px;background:#f4e6e3;display:grid;place-items:center">♡</div>'}
-        <div class="info"><strong>${esc(i.name)}</strong><div>${money(i.price)}</div>
-        <small>${i.cooldownDate?"冷靜期至 "+dateText(i.cooldownDate):"未設定冷靜期"}</small></div>
-      </div>
-      ${i.note?`<p class="muted">${esc(i.note)}</p>`:""}
-      <div class="actions">
-        <button onclick="moveItem('${i.id}')">移動象限</button>
-        <button onclick="buyItem('${i.id}')">已購買</button>
-        <button class="danger" onclick="removeItem('${i.id}')">刪除</button>
-      </div>
-    </div>`).join(""):'<div class="card empty">這裡還沒有商品，新增一件吧 ♡</div>';
+let items=data.items.filter(i=>i.quadrant===currentQuadrant);
+$("itemList").innerHTML=items.length?items.map(i=>`<div class="card"><div class="item">
+${i.photo?`<img src="${i.photo}" alt="商品照片">`:'<div style="width:70px;height:70px;border-radius:12px;background:var(--pink2);display:grid;place-items:center">♡</div>'}
+<div class="info"><strong>${esc(i.name)}</strong>${money(i.price)}<br><small>${i.cooldownDate?"冷靜期至 "+dateText(i.cooldownDate):"未設定冷靜期"}</small></div></div>
+${i.note?`<p class="muted">${esc(i.note)}</p>`:""}
+<div class="actions"><button onclick="moveItem('${i.id}')">移動象限</button><button onclick="buyItem('${i.id}')">已購買</button><button class="danger" onclick="removeItem('${i.id}')">刪除</button></div></div>`).join(""):'<div class="card empty">還沒有商品 ♡</div>';
+$("boughtList").innerHTML=data.bought.filter(i=>i.quadrant===currentQuadrant).map(i=>`<div class="card"><strong>${esc(i.name)}</strong><br><small>${dateText(i.boughtDate)} · 實際 ${money(i.actualPrice)}</small></div>`).join("")||'<div class="empty">還沒有購買紀錄</div>';
 }
 function moveItem(id){
-  const options=Object.entries(qNames).map(([k,v],n)=>`${n+1}. ${v}`).join("\n");
-  const n=prompt("輸入要移動到的象限編號：\n"+options);
-  if(n===null)return;
-  const keys=Object.keys(qNames),q=keys[Number(n)-1];
-  if(!q)return alert("請輸入 1～4");
-  const item=data.items.find(i=>i.id===id);if(item)item.quadrant=q;
-  save();renderItems();renderShoppingStats();
+let keys=Object.keys(qNames),choice=prompt("輸入移動象限編號：\n"+keys.map((k,i)=>`${i+1}. ${qNames[k]}`).join("\n"));
+if(choice===null)return;let q=keys[Number(choice)-1];if(!q)return alert("請輸入 1～4");
+let item=data.items.find(i=>i.id===id);if(item)item.quadrant=q;save();renderItems();renderShoppingStats();
 }
 function buyItem(id){
-  const i=data.items.find(x=>x.id===id);if(!i)return;
-  const raw=prompt("實際購買金額：",String(i.price));
-  if(raw===null)return;
-  let actual;try{actual=calc(raw);}catch(e){return alert("金額格式錯誤");}
-  if(actual<0)return alert("金額不能小於 0");
-  data.bought.push({...i,actualPrice:actual,boughtDate:today()});
-  data.items=data.items.filter(x=>x.id!==id);
-  save();renderItems();renderShoppingStats();
-  alert("已移至購買紀錄。若要列入支出，請另外新增一筆記帳。");
+let i=data.items.find(x=>x.id===id);if(!i)return;
+let raw=prompt("實際購買金額",String(i.price));if(raw===null)return;
+let actual;try{actual=calc(raw)}catch(e){return alert("金額格式錯誤")}
+if(actual<0)return alert("金額不能小於 0");
+data.bought.push({...i,actualPrice:actual,boughtDate:today()});
+data.items=data.items.filter(x=>x.id!==id);save();renderItems();renderShoppingStats();
+alert("已移至購買紀錄。若要列入支出，請另外新增記帳。");
 }
-function removeItem(id){
-  if(!confirm("確定刪除商品？"))return;
-  data.items=data.items.filter(i=>i.id!==id);save();renderItems();renderShoppingStats();
-}
+function removeItem(id){if(!confirm("刪除這件商品？"))return;data.items=data.items.filter(i=>i.id!==id);save();renderItems();renderShoppingStats()}
 function renderShoppingStats(){
-  const total=data.items.reduce((s,i)=>s+i.price,0);
-  const bought=data.bought.reduce((s,i)=>s+i.actualPrice,0);
-  $("shoppingStats").innerHTML=`目前待買 ${data.items.length} 件 · 預估 ${money(total)}<br>已購買 ${data.bought.length} 件 · 實際 ${money(bought)}`;
+$("shoppingStats").textContent=`待買 ${data.items.length} 件 · 預估 ${money(data.items.reduce((s,i)=>s+i.price,0))}｜已買 ${data.bought.length} 件 · 實際 ${money(data.bought.reduce((s,i)=>s+i.actualPrice,0))}`;
 }
 function saveBudget(){
-  data.budget=Math.max(0,Number($("budgetInput").value)||0);save();render();
-  alert("預算已儲存 ♡");
+let m=$("budgetMonth").value,v=Number($("budgetTotal").value);
+if(!m||v<0)return alert("請輸入正確預算");
+if(allocatedTotal(m)>v)return alert("分類分配總額已超過總預算，請先調整分類。");
+data.budgets[m]=v;save();render();alert("總預算已儲存 ♡");
+}
+function renderAllocationEditor(){
+let m=$("budgetMonth").value||thisMonth(),a=allocations(m);
+$("budgetTotal").value=monthBudget(m);
+$("allocationEditor").innerHTML=data.categories.map(c=>`<div class="row between"><label>${esc(c)}</label><input type="number" min="0" data-allocation="${esc(c)}" value="${a[c]||0}" style="width:125px"></div>`).join("");
+}
+function addAllocation(){
+let c=$("newAllocationName").value.trim(),v=Number($("newAllocationAmount").value);
+if(!c||v<0)return alert("請輸入分類及金額");
+let m=$("budgetMonth").value||thisMonth(),a={...allocations(m)};
+if(Object.hasOwn(a,c))return alert("這個預算分類已存在");
+if(allocatedTotal(m)+v>monthBudget(m))return alert("分配金額超過總預算");
+a[c]=v;data.allocations[m]=a;
+if(!data.categories.includes(c))data.categories.push(c);
+$("newAllocationName").value="";$("newAllocationAmount").value="";
+save();renderAllocationEditor();renderCategoryEditor();updateRecordOptions();render();
+}
+function saveAllocations(){
+let m=$("budgetMonth").value||thisMonth(),a={};
+document.querySelectorAll("[data-allocation]").forEach(el=>a[el.dataset.allocation]=Number(el.value)||0);
+let sum=Object.values(a).reduce((x,y)=>x+y,0);
+if(sum>monthBudget(m))return alert(`分類預算合計 ${money(sum)}，超過總預算 ${money(monthBudget(m))}`);
+data.allocations[m]=a;save();render();alert("分類預算已儲存 ♡");
+}
+function renderCategoryEditor(){
+$("categoryEditor").innerHTML=data.categories.map((c,i)=>`<div class="row between"><span>${esc(c)}</span><button class="danger" onclick="removeCategory(${i})">刪除</button></div><hr>`).join("");
+}
+function addCategory(){
+let c=$("newCategory").value.trim();if(!c)return;
+if(data.categories.includes(c))return alert("分類已存在");
+data.categories.push(c);$("newCategory").value="";save();renderCategoryEditor();updateRecordOptions();
+}
+function removeCategory(i){
+let c=data.categories[i];if(data.records.some(r=>r.category===c))return alert("此分類已有記帳紀錄，不能直接刪除。");
+if(!confirm("確定刪除此分類？"))return;
+data.categories.splice(i,1);save();renderCategoryEditor();updateRecordOptions();
+}
+function setTheme(t){
+let themes={
+cream:["#f8f5f1","#fffdfb","#ead2d0","#f4e6e3","#705b55","#514541","#a99b95","#eee5df"],
+pink:["#f5e8e7","#fffafa","#e8c9ce","#f8e9eb","#805d64","#59464a","#ad9296","#eddbdf"],
+green:["#edf0e9","#fbfcf9","#d6e1d2","#e8eee5","#5e705d","#485346","#929f8f","#dfe6db"],
+purple:["#eeebf4","#fcfbff","#dcd5e9","#eae7f0","#6c607d","#50485d","#9b91a8","#e4dfeb"]
+};
+let v=themes[t]||themes.cream;
+["--bg","--card","--pink","--pink2","--brown","--text","--muted","--line"].forEach((k,i)=>document.documentElement.style.setProperty(k,v[i]));
+data.theme=t;save();
 }
 function backup(){
-  const blob=new Blob([JSON.stringify(data,null,2)],{type:"application/json"});
-  const url=URL.createObjectURL(blob),a=document.createElement("a");
-  a.href=url;a.download="my-little-journal-backup.json";a.click();
-  URL.revokeObjectURL(url);
+let blob=new Blob([JSON.stringify(data,null,2)],{type:"application/json"});
+let url=URL.createObjectURL(blob),a=document.createElement("a");
+a.href=url;a.download="my-little-journal-backup.json";a.click();URL.revokeObjectURL(url);
 }
 async function restoreBackup(){
-  const file=$("restoreFile").files[0];if(!file)return alert("請先選擇備份檔案");
-  if(!confirm("還原會覆蓋目前資料，確定繼續嗎？"))return;
-  try{
-    const d=JSON.parse(await file.text());
-    if(!Array.isArray(d.records)||!Array.isArray(d.items)||!Array.isArray(d.funds))throw Error();
-    data={...defaults,...d};save();render();alert("備份還原完成 ♡");
-  }catch(e){alert("檔案格式不正確，無法還原。");}
-}
-function esc(s){
-  return String(s??"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+let file=$("restoreFile").files[0];if(!file)return alert("請先選擇備份檔");
+if(!confirm("還原會覆蓋目前資料，確定嗎？"))return;
+try{
+let d=JSON.parse(await file.text());
+if(!Array.isArray(d.records)||!Array.isArray(d.funds)||!Array.isArray(d.items))throw Error();
+data={...DEFAULT,...d};save();updateRecordOptions();render();alert("還原完成 ♡");
+}catch(e){alert("備份檔案格式不正確");}
 }
 function render(){
-  $("budgetInput").value=data.budget;
-  renderHome();renderRecords();renderFunds();renderStats();renderShoppingStats();
-  if(!$("quadrantDetail").classList.contains("hidden"))renderItems();
+updateRecordOptions();renderHome();renderRecords();renderFunds();renderStats();
+renderShoppingStats();renderAllocationEditor();renderCategoryEditor();
+if(!$("quadrantDetail").classList.contains("hidden"))renderItems();
+setTheme(data.theme||"cream");
 }
-$("homeMonth").addEventListener("change",renderHome);
-$("statsMonth").addEventListener("change",renderStats);
+$("homeMonth").onchange=renderHome;
+$("statsMonth").onchange=renderStats;
+$("budgetMonth").onchange=renderAllocationEditor;
+$("recordSource").onchange();
 render();
+if("serviceWorker" in navigator){
+window.addEventListener("load",()=>navigator.serviceWorker.register("./sw.js").catch(()=>{}));
+}
 </script>
 </body>
 </html>
