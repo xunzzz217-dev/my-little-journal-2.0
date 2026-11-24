@@ -1,0 +1,14 @@
+
+{
+  "name": "MY LITTLE JOURNAL",
+  "short_name": "LITTLE JOURNAL",
+  "description": "我的專屬生活與記帳手帳",
+  "lang": "zh-TW",
+  "start_url": "./",
+  "scope": "./",
+  "display": "standalone",
+  "orientation": "portrait",
+  "background_color": "#f8f5f1",
+  "theme_color": "#f8f3ef",
+  "icons": []
+}
