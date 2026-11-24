@@ -3,181 +3,490 @@
 <html lang="zh-Hant">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="theme-color" content="#f8f3ef">
 <title>MY LITTLE JOURNAL</title>
 <style>
-:root{--bg:#f8f5f2;--paper:#fffdfa;--pink:#e9c9c8;--pink2:#f5e5e2;--brown:#76615c;--ink:#514542;--muted:#a99b95;--line:#eee5df;--green:#a9b8a1}
-*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--ink);font-family:-apple-system,BlinkMacSystemFont,"Noto Sans TC",sans-serif}
-header{padding:25px 20px 18px;background:var(--paper);border-bottom:1px solid var(--line);position:sticky;top:0;z-index:5}
-.brand{font-family:Georgia,serif;letter-spacing:2px;font-size:21px}.sub{font-size:11px;color:var(--muted);letter-spacing:2px;margin-top:5px}
-nav{display:flex;overflow:auto;gap:8px;padding:12px 15px;background:var(--paper);position:sticky;top:82px;z-index:4}
-nav button,.btn{border:0;border-radius:20px;padding:10px 15px;background:var(--pink2);color:var(--brown);white-space:nowrap;font-size:13px}
-nav button.active,.btn.primary{background:var(--brown);color:white}
-main{max-width:850px;margin:auto;padding:18px 15px 100px}
+:root{
+  --bg:#f8f5f1;--card:#fffdfb;--pink:#ead2d0;
+  --pink2:#f4e6e3;--brown:#705b55;--text:#514541;
+  --muted:#a99b95;--green:#e8eee5;--line:#eee5df;
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--text);
+  font-family:-apple-system,BlinkMacSystemFont,"Noto Sans TC",sans-serif}
+header{padding:25px 20px 16px}
+header small{color:var(--muted);letter-spacing:2px}
+h1{font-size:23px;letter-spacing:2px;margin:7px 0}
+main{padding:0 15px 95px;max-width:680px;margin:auto}
+nav{position:fixed;bottom:0;left:0;right:0;background:#fffdfbf2;
+  border-top:1px solid var(--line);display:flex;justify-content:space-around;
+  padding:9px 2px calc(9px + env(safe-area-inset-bottom));z-index:5}
+nav button{border:0;background:none;color:var(--muted);font-size:11px;padding:5px}
+nav button.active{color:var(--brown);font-weight:700}
+nav span{display:block;font-size:19px;margin-bottom:3px}
 .page{display:none}.page.active{display:block}
-h2{font-size:19px;font-weight:600;margin:8px 0 15px}h3{font-size:14px;margin:0 0 10px}
-.card{background:var(--paper);border:1px solid var(--line);border-radius:18px;padding:16px;margin-bottom:13px;box-shadow:0 3px 12px #6c51400a}
-.grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
-.stat{background:var(--paper);border:1px solid var(--line);border-radius:16px;padding:15px}
-.stat small{color:var(--muted);font-size:11px}.stat strong{display:block;font-size:22px;margin-top:7px}
-input,select,textarea{width:100%;border:1px solid var(--line);border-radius:11px;padding:11px;background:#fffdfa;color:var(--ink);font:inherit;margin:5px 0 10px}
-textarea{min-height:65px}label{font-size:12px;color:var(--muted)}
-.row{display:flex;gap:8px;align-items:center;flex-wrap:wrap}.row>*{flex:1}
-button{cursor:pointer}.full{width:100%}.muted{color:var(--muted);font-size:12px}
-.quadrants{display:grid;grid-template-columns:1fr 1fr;gap:10px}
-.quad{border-radius:16px;padding:12px;min-height:145px;background:#fffdfa;border:1px solid var(--line)}
-.quad:nth-child(1){background:#fbf0ed}.quad:nth-child(2){background:#f5f2ea}.quad:nth-child(3){background:#f7f1f5}.quad:nth-child(4){background:#f0f3ed}
-.quad-title{font-size:12px;font-weight:650;margin-bottom:10px;line-height:1.5}
-.item{background:#fffdfa;border:1px solid #eee6e0;border-radius:12px;padding:10px;margin:7px 0;font-size:12px}
-.item img{width:100%;max-height:120px;object-fit:cover;border-radius:9px;margin:5px 0}
-.item strong{font-size:13px}.item select{font-size:11px;padding:7px;margin:5px 0}
-.item button{font-size:11px;border:0;border-radius:9px;padding:7px 9px;background:var(--pink2);color:var(--brown);margin:3px 2px 0 0}
-.line{height:1px;background:var(--line);margin:12px 0}
-.record{display:flex;justify-content:space-between;gap:10px;padding:11px 0;border-bottom:1px solid var(--line);font-size:13px}
-.positive{color:#82977a}.negative{color:#bd8882}
-footer{text-align:center;color:var(--muted);font-size:10px;padding:25px}
-@media(max-width:430px){.grid{gap:8px}.stat{padding:12px}.stat strong{font-size:19px}.quadrants{gap:7px}.quad{padding:9px}}
+.card{background:var(--card);border:1px solid var(--line);border-radius:18px;
+  padding:16px;margin:12px 0;box-shadow:0 3px 12px #80685b08}
+.row{display:flex;gap:10px;align-items:center}
+.between{justify-content:space-between}
+.grid{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.stat{background:var(--pink2);border-radius:15px;padding:14px}
+.stat small{color:var(--muted)}
+.stat strong{display:block;font-size:21px;margin-top:7px}
+h2{font-size:18px;margin:18px 3px 10px}
+h3{font-size:15px;margin:0 0 8px}
+p{line-height:1.6}
+small,.muted{color:var(--muted)}
+button,.btn{border:0;border-radius:12px;background:var(--pink2);
+  color:var(--brown);padding:10px 13px;font-size:13px;cursor:pointer}
+button.primary{background:var(--brown);color:white}
+button.danger{background:#f7e7e5;color:#a35f58}
+input,select,textarea{width:100%;padding:12px;border:1px solid var(--line);
+  border-radius:11px;background:#fffdfb;color:var(--text);font-size:14px;
+  margin:5px 0 11px}
+textarea{min-height:75px;resize:vertical}
+label{font-size:12px;color:var(--muted)}
+form{margin-top:10px}
+.quads{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.quad{min-height:125px;border-radius:17px;padding:15px;text-align:left;
+  display:flex;flex-direction:column;justify-content:space-between}
+.quad strong{font-size:15px}.quad small{color:#806f68}
+.q1{background:#f1e1de}.q2{background:#e9eee5}
+.q3{background:#f3eadc}.q4{background:#e8e5ef}
+.item{display:flex;gap:12px;align-items:center}
+.item img{width:68px;height:68px;object-fit:cover;border-radius:12px}
+.item .info{flex:1;min-width:0}
+.item .info strong{display:block}
+.pill{font-size:11px;background:var(--pink2);padding:4px 8px;border-radius:20px}
+.actions{display:flex;gap:7px;flex-wrap:wrap;margin-top:9px}
+.actions button{padding:7px 10px}
+hr{border:0;border-top:1px solid var(--line);margin:13px 0}
+.empty{text-align:center;padding:25px;color:var(--muted)}
+.hidden{display:none!important}
 </style>
 </head>
 <body>
-<header><div class="brand">MY LITTLE JOURNAL ♡</div><div class="sub">A LITTLE SPACE FOR MY LIFE</div></header>
-<nav id="nav">
-<button class="active" data-page="home">首頁</button>
-<button data-page="records">記帳</button>
-<button data-page="funds">基金</button>
-<button data-page="stats">統計</button>
-<button data-page="shopping">購物管理</button>
-<button data-page="settings">設定</button>
-</nav>
+<header>
+  <small>MY LITTLE JOURNAL · MY DAILY LIFE</small>
+  <h1>我的生活手帳 ♡</h1>
+  <div class="muted" id="today"></div>
+</header>
+
 <main>
-<section id="home" class="page active">
-<h2>今天也好好生活 ♡</h2><div class="muted" id="today"></div>
-<div class="grid" style="margin-top:14px">
-<div class="stat"><small>本月收入</small><strong id="homeIncome">$0</strong></div>
-<div class="stat"><small>本月支出</small><strong id="homeExpense">$0</strong></div>
-<div class="stat"><small>可用餘額</small><strong id="homeBalance">$0</strong></div>
-<div class="stat"><small>購物願望</small><strong id="homeWish">0 件</strong></div>
-</div>
-<div class="card" style="margin-top:14px"><h3>本月預算</h3><div id="budgetText" class="muted"></div><div style="height:8px;background:#f0e9e4;border-radius:9px;margin-top:10px"><div id="budgetBar" style="height:8px;width:0;background:var(--pink);border-radius:9px"></div></div></div>
-<div class="card"><h3>最近記帳</h3><div id="recent"></div></div>
-<div class="card"><h3>購物提醒</h3><div id="reminders" class="muted"></div></div>
+<section class="page active" id="home">
+  <div class="card">
+    <div class="row between"><h3>本月總覽</h3><input id="homeMonth" type="month" style="width:145px;margin:0"></div>
+    <div class="grid" style="margin-top:13px">
+      <div class="stat"><small>收入</small><strong id="homeIncome">$0</strong></div>
+      <div class="stat"><small>支出</small><strong id="homeExpense">$0</strong></div>
+      <div class="stat"><small>可用餘額</small><strong id="homeBalance">$0</strong></div>
+      <div class="stat"><small>本月預算</small><strong id="homeBudget">$0</strong></div>
+    </div>
+  </div>
+  <h2>最近記帳</h2>
+  <div class="card" id="recentRecords"></div>
+  <h2>我的小提醒</h2>
+  <div class="card" id="homeReminders">目前沒有提醒 ♡</div>
 </section>
 
-<section id="records" class="page">
-<h2>記帳小本本</h2>
-<div class="card">
-<label>類型</label><select id="rType"><option value="expense">支出</option><option value="income">收入</option></select>
-<label>金額（可輸入 20+38）</label><input id="rAmount" placeholder="例如 20+38" inputmode="decimal">
-<label>分類</label><select id="rCategory"><option>飲食</option><option>交通</option><option>購物</option><option>娛樂</option><option>學習</option><option>生活</option><option>薪資</option><option>零用錢</option><option>其他</option></select>
-<label>日期</label><input id="rDate" type="date">
-<label>備註</label><input id="rNote" placeholder="今天買了什麼呢？">
-<button class="btn primary full" onclick="addRecord()">新增紀錄</button>
-</div>
-<div class="card"><h3>所有紀錄</h3><div id="recordList"></div></div>
+<section class="page" id="records">
+  <h2>記帳小本本</h2>
+  <div class="card">
+    <form id="recordForm">
+      <label>收支類型</label>
+      <select id="recordType"><option value="expense">支出</option><option value="income">收入</option></select>
+      <label>金額（可輸入 20+38）</label>
+      <input id="recordAmount" placeholder="例如：20+38" required>
+      <label>分類</label>
+      <input id="recordCategory" placeholder="例如：飲食、交通、薪水" required>
+      <label>日期</label>
+      <input id="recordDate" type="date" required>
+      <label>備註</label>
+      <textarea id="recordNote" placeholder="寫點什麼吧…"></textarea>
+      <button class="primary" type="submit" style="width:100%">儲存紀錄</button>
+    </form>
+  </div>
+  <h2>所有紀錄</h2>
+  <div class="card" id="recordList"></div>
 </section>
 
-<section id="funds" class="page">
-<h2>我的小基金 ♡</h2>
-<div class="card">
-<label>基金名稱</label><input id="fName" placeholder="例如：旅行基金">
-<label>目標金額</label><input id="fTarget" type="number" placeholder="5000">
-<button class="btn primary full" onclick="addFund()">建立基金</button>
-</div><div id="fundList"></div>
+<section class="page" id="funds">
+  <h2>我的基金</h2>
+  <div class="card">
+    <form id="fundForm">
+      <label>基金名稱</label><input id="fundName" placeholder="例如：旅行基金" required>
+      <label>目標金額</label><input id="fundTarget" type="number" min="1" placeholder="10000" required>
+      <button class="primary" style="width:100%">新增基金</button>
+    </form>
+  </div>
+  <div id="fundList"></div>
 </section>
 
-<section id="stats" class="page">
-<h2>收支統計</h2>
-<div class="grid">
-<div class="stat"><small>累計收入</small><strong id="sIncome">$0</strong></div>
-<div class="stat"><small>累計支出</small><strong id="sExpense">$0</strong></div>
-<div class="stat"><small>基金餘額</small><strong id="sFunds">$0</strong></div>
-<div class="stat"><small>已購買商品</small><strong id="sBought">0 件</strong></div>
-</div>
-<div class="card" style="margin-top:13px"><h3>支出分類</h3><div id="categoryStats"></div></div>
+<section class="page" id="stats">
+  <h2>收支統計</h2>
+  <div class="card">
+    <label>選擇月份</label>
+    <input id="statsMonth" type="month">
+    <div class="grid">
+      <div class="stat"><small>收入</small><strong id="statsIncome">$0</strong></div>
+      <div class="stat"><small>支出</small><strong id="statsExpense">$0</strong></div>
+    </div>
+    <hr>
+    <h3>支出分類</h3>
+    <div id="categoryStats"></div>
+  </div>
 </section>
 
-<section id="shopping" class="page">
-<h2>我的購物管理 ♡</h2>
-<div class="card">
-<h3>新增商品</h3>
-<label>商品名稱</label><input id="pName" placeholder="想買什麼呢？">
-<div class="row"><div><label>預估金額</label><input id="pPrice" type="number" placeholder="0"></div><div><label>冷靜期</label><select id="pCooldown"><option value="0">不提醒</option><option value="7">7 天</option><option value="14">14 天</option><option value="30">30 天</option></select></div></div>
-<label>商品照片（可選）</label><input id="pPhoto" type="file" accept="image/*">
-<label>購買連結（可選）</label><input id="pLink" placeholder="https://">
-<label>備註（可選）</label><textarea id="pNote" placeholder="尺寸、顏色、想買原因……"></textarea>
-<label>放入清單</label><select id="pQuadrant"><option value="0">想要＋急需｜願望清單</option><option value="1">需要＋急需｜急需購物</option><option value="2">想要＋不急｜想買但沒買</option><option value="3">需要＋不急｜一般購物清單</option></select>
-<button class="btn primary full" onclick="addProduct()">加入購物清單</button>
-</div>
-<div class="quadrants" id="quadrants"></div>
-<div class="card" style="margin-top:14px"><h3>已購買紀錄</h3><div id="boughtList"></div></div>
+<section class="page" id="shopping">
+  <h2>購物管理 ♡</h2>
+  <p class="muted">先選擇象限，再進入清單查看商品照片。</p>
+  <div class="quads">
+    <button class="quad q1" onclick="openQuadrant('wantUrgent')">
+      <strong>♡ 想要＋急需</strong><small>願望清單</small>
+    </button>
+    <button class="quad q2" onclick="openQuadrant('needUrgent')">
+      <strong>✿ 需要＋急需</strong><small>急需購物</small>
+    </button>
+    <button class="quad q3" onclick="openQuadrant('wantLater')">
+      <strong>☆ 想要＋非急需</strong><small>想買但先存下</small>
+    </button>
+    <button class="quad q4" onclick="openQuadrant('needLater')">
+      <strong>☁ 需要＋非急需</strong><small>非急需購物</small>
+    </button>
+  </div>
+  <div class="card">
+    <h3>購物小統計</h3>
+    <div id="shoppingStats"></div>
+  </div>
+  <div id="quadrantDetail" class="hidden">
+    <div class="row between">
+      <h2 id="quadrantTitle">商品清單</h2>
+      <button onclick="closeQuadrant()">返回四象限</button>
+    </div>
+    <div class="card">
+      <form id="itemForm">
+        <label>商品名稱</label><input id="itemName" required placeholder="想買什麼呢？">
+        <label>預估金額</label><input id="itemPrice" placeholder="例如：299">
+        <label>商品照片（可選）</label><input id="itemPhoto" type="file" accept="image/*">
+        <label>備註</label><textarea id="itemNote" placeholder="尺寸、顏色、購買連結等"></textarea>
+        <label>冷靜期</label>
+        <select id="itemCooldown">
+          <option value="0">不設定</option><option value="7">7 天</option>
+          <option value="14">14 天</option><option value="30">30 天</option>
+        </select>
+        <button class="primary" style="width:100%">新增商品</button>
+      </form>
+    </div>
+    <div id="itemList"></div>
+  </div>
 </section>
 
-<section id="settings" class="page">
-<h2>設定與備份</h2>
-<div class="card"><h3>每月預算</h3><label>預算金額</label><input id="budgetInput" type="number" placeholder="例如 9000"><button class="btn primary full" onclick="saveBudget()">儲存預算</button></div>
-<div class="card"><h3>資料備份</h3><p class="muted">備份會包含記帳、基金、購物商品及設定。請定期下載並妥善保存。</p><button class="btn primary full" onclick="backup()">匯出完整備份</button><div class="line"></div><label>還原備份檔</label><input id="restoreFile" type="file" accept=".json,application/json"><button class="btn full" onclick="restore()">還原資料</button></div>
-<div class="card"><h3>資料儲存</h3><p class="muted">免登入，資料儲存在目前瀏覽器。清除瀏覽器資料或更換裝置可能導致資料遺失，請記得手動備份。</p></div>
+<section class="page" id="settings">
+  <h2>設定</h2>
+  <div class="card">
+    <h3>每月預算</h3>
+    <input id="budgetInput" type="number" min="0" placeholder="設定每月預算">
+    <button class="primary" onclick="saveBudget()">儲存預算</button>
+  </div>
+  <div class="card">
+    <h3>資料備份</h3>
+    <p class="muted">將紀錄、基金、購物清單和設定匯出成 JSON 檔案。</p>
+    <button class="primary" onclick="backup()">匯出備份</button>
+    <hr>
+    <label>還原備份檔案</label>
+    <input type="file" id="restoreFile" accept=".json,application/json">
+    <button onclick="restoreBackup()">還原資料</button>
+  </div>
+  <div class="card">
+    <h3>資料儲存說明</h3>
+    <p class="muted">目前使用此瀏覽器的本機儲存。清除網站資料或更換裝置前，請先匯出備份。</p>
+  </div>
 </section>
-<footer>MADE WITH LOVE · MY LITTLE JOURNAL</footer>
 </main>
 
+<nav>
+  <button class="active" data-page="home"><span>⌂</span>首頁</button>
+  <button data-page="records"><span>▤</span>記帳</button>
+  <button data-page="funds"><span>♡</span>基金</button>
+  <button data-page="stats"><span>◷</span>統計</button>
+  <button data-page="shopping"><span>✿</span>購物</button>
+  <button data-page="settings"><span>⚙</span>設定</button>
+</nav>
+
 <script>
-const KEY='myLittleJournal_v2';
-let data=JSON.parse(localStorage.getItem(KEY)||'null')||{records:[],funds:[],products:[],budget:9000};
+const KEY="myLittleJournal_v2";
+const defaults={
+  records:[],funds:[],items:[],bought:[],budget:5000
+};
+let data;
+try{
+  data={...defaults,...JSON.parse(localStorage.getItem(KEY)||"{}")};
+}catch(e){data={...defaults};}
+let currentQuadrant="wantUrgent";
+
 const $=id=>document.getElementById(id);
-const money=n=>'$'+Number(n||0).toLocaleString('zh-TW');
-const today=()=>{let d=new Date();return d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0')};
-const fmt=s=>{if(!s)return '';let d=new Date(s+'T00:00:00');return String(d.getFullYear()).slice(-2)+'/'+String(d.getMonth()+1).padStart(2,'0')+'/'+String(d.getDate()).padStart(2,'0')};
-const save=()=>{localStorage.setItem(KEY,JSON.stringify(data));render()};
-function escapeHTML(s){return String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]))}
-function calc(s){
- s=String(s).replace(/×/g,'*').replace(/÷/g,'/');
- if(!/^[\d+\-*/().\s]+$/.test(s))throw Error('格式錯誤');
- let tokens=s.match(/\d+(?:\.\d+)?|[()+\-*/]/g)||[],i=0;
- function atom(){let t=tokens[i++];if(t==='('){let v=expr();if(tokens[i++]!==')')throw Error();return v}if(t==='-')return -atom();if(t==='+')return atom();if(!t||isNaN(Number(t)))throw Error();return Number(t)}
- function term(){let v=atom();while(tokens[i]==='*'||tokens[i]==='/'){let op=tokens[i++],n=atom();v=op==='*'?v*n:v/n}return v}
- function expr(){let v=term();while(tokens[i]==='+'||tokens[i]==='-'){let op=tokens[i++],n=term();v=op==='+'?v+n:v-n}return v}
- let v=expr();if(i!==tokens.length||!Number.isFinite(v)||v<0)throw Error('金額不正確');return Math.round(v*100)/100
+const money=n=>"$"+Number(n||0).toLocaleString("zh-TW");
+const today=()=>new Date().toISOString().slice(0,10);
+const monthNow=()=>today().slice(0,7);
+const dateText=d=>d?d.slice(2).replaceAll("-","/"):"";
+function save(){
+  try{localStorage.setItem(KEY,JSON.stringify(data));}
+  catch(e){alert("儲存空間可能不足，請先備份資料或減少照片。");}
 }
-function addRecord(){
- try{let amount=calc($('rAmount').value);data.records.unshift({id:Date.now(),type:$('rType').value,amount,category:$('rCategory').value,date:$('rDate').value||today(),note:$('rNote').value});$('rAmount').value='';$('rNote').value='';save()}catch(e){alert('請輸入正確的金額，例如 20+38')}
+function calc(v){
+  const s=String(v).replace(/\s/g,"");
+  if(!s||!/^[0-9+\-*/().]+$/.test(s))throw Error("金額格式錯誤");
+  const tokens=s.match(/\d*\.?\d+|[()+\-*/]/g);
+  if(!tokens||tokens.join("")!==s)throw Error("金額格式錯誤");
+  let i=0;
+  function factor(){
+    let t=tokens[i++];
+    if(t==="("){let n=expr();if(tokens[i++]!==")")throw Error();return n;}
+    if(t==="-")return-factor();
+    if(t==="+")return factor();
+    let n=Number(t);if(!Number.isFinite(n))throw Error();return n;
+  }
+  function term(){
+    let n=factor();
+    while(tokens[i]==="*"||tokens[i]==="/"){
+      let op=tokens[i++],b=factor();
+      if(op==="/"&&b===0)throw Error("不能除以 0");
+      n=op==="*"?n*b:n/b;
+    }return n;
+  }
+  function expr(){
+    let n=term();
+    while(tokens[i]==="+"||tokens[i]==="-"){
+      let op=tokens[i++],b=term();n=op==="+"?n+b:n-b;
+    }return n;
+  }
+  let result=expr();if(i!==tokens.length||!Number.isFinite(result))throw Error("算式錯誤");
+  return Math.round(result*100)/100;
 }
-function addFund(){let name=$('fName').value.trim(),target=Number($('fTarget').value);if(!name||target<=0)return alert('請填寫基金名稱與目標金額');data.funds.push({id:Date.now(),name,target,balance:0});$('fName').value='';$('fTarget').value='';save()}
-function fundAction(id,action){let f=data.funds.find(x=>x.id===id);if(!f)return;let n=Number(prompt(action==='add'?'存入多少金額？':'領出多少金額？'));if(!Number.isFinite(n)||n<=0)return;if(action==='take'&&n>f.balance)return alert('基金餘額不足');f.balance+=action==='add'?n:-n;save()}
-function addProduct(){
- let name=$('pName').value.trim(),price=Number($('pPrice').value)||0;if(!name)return alert('請輸入商品名稱');
- let file=$('pPhoto').files[0],finish=photo=>{let days=Number($('pCooldown').value),date=new Date();date.setDate(date.getDate()+days);data.products.unshift({id:Date.now(),name,price,quadrant:Number($('pQuadrant').value),photo:photo||'',link:$('pLink').value,note:$('pNote').value,cooldown:days,remind:days?date.toISOString().slice(0,10):'',bought:false,created:today()});['pName','pPrice','pPhoto','pLink','pNote'].forEach(id=>$(id).value='');save()};
- if(file){let r=new FileReader();r.onload=()=>finish(r.result);r.readAsDataURL(file)}else finish('');
+function showPage(id){
+  document.querySelectorAll(".page").forEach(p=>p.classList.toggle("active",p.id===id));
+  document.querySelectorAll("nav button").forEach(b=>b.classList.toggle("active",b.dataset.page===id));
+  render();
 }
-function moveProduct(id,q){let p=data.products.find(x=>x.id===id);if(p){p.quadrant=Number(q);save()}}
-function buyProduct(id){let p=data.products.find(x=>x.id===id);if(!p)return;if(!confirm('確定將這項商品標記為已購買？'))return;p.bought=true;p.boughtDate=today();save()}
-function deleteProduct(id){if(confirm('確定刪除這項商品？')){data.products=data.products.filter(x=>x.id!==id);save()}}
-function editProduct(id){let p=data.products.find(x=>x.id===id);if(!p)return;let name=prompt('修改商品名稱',p.name);if(name===null)return;let price=prompt('修改預估金額',p.price);p.name=name.trim()||p.name;p.price=Math.max(0,Number(price)||0);save()}
-const qNames=['想要＋急需｜願望清單','需要＋急需｜急需購物','想要＋不急｜想買但沒買','需要＋不急｜一般購物清單'];
-function renderShopping(){
- $('quadrants').innerHTML=qNames.map((name,q)=>`<div class="quad"><div class="quad-title">${name}</div>${data.products.filter(p=>!p.bought&&p.quadrant===q).map(p=>`<div class="item">${p.photo?`<img src="${p.photo}">`:''}<strong>${escapeHTML(p.name)}</strong><div>${money(p.price)}</div>${p.remind?`<div class="muted">冷靜期至 ${fmt(p.remind)}</div>`:''}${p.note?`<div class="muted">${escapeHTML(p.note)}</div>`:''}${p.link?`<a href="${escapeHTML(p.link)}" target="_blank" rel="noopener">商品連結</a>`:''}<select onchange="moveProduct(${p.id},this.value)">${qNames.map((n,i)=>`<option value="${i}" ${i===q?'selected':''}>移動至：${n.split('｜')[0]}</option>`).join('')}</select><button onclick="editProduct(${p.id})">編輯</button><button onclick="buyProduct(${p.id})">已購買</button><button onclick="deleteProduct(${p.id})">刪除</button></div>`).join('')||'<div class="muted">目前沒有商品 ♡</div>'}</div>`).join('');
- $('boughtList').innerHTML=data.products.filter(p=>p.bought).map(p=>`<div class="record"><span>${escapeHTML(p.name)}<div class="muted">${fmt(p.boughtDate)}</div></span><strong>${money(p.price)}</strong></div>`).join('')||'<div class="muted">還沒有購買紀錄</div>';
+document.querySelectorAll("nav button").forEach(b=>b.addEventListener("click",()=>showPage(b.dataset.page)));
+$("today").textContent=dateText(today());
+$("recordDate").value=today();
+$("homeMonth").value=monthNow();
+$("statsMonth").value=monthNow();
+
+$("recordForm").addEventListener("submit",e=>{
+  e.preventDefault();
+  try{
+    const amount=calc($("recordAmount").value);
+    if(amount<=0)throw Error("金額必須大於 0");
+    data.records.unshift({
+      id:crypto.randomUUID(),type:$("recordType").value,amount,
+      category:$("recordCategory").value.trim(),date:$("recordDate").value,
+      note:$("recordNote").value.trim()
+    });
+    save();e.target.reset();$("recordDate").value=today();render();
+    alert("紀錄已儲存 ♡");
+  }catch(err){alert(err.message||"請檢查金額算式");}
+});
+
+$("fundForm").addEventListener("submit",e=>{
+  e.preventDefault();
+  const name=$("fundName").value.trim(),target=Number($("fundTarget").value);
+  if(!name||target<=0)return alert("請輸入正確資料");
+  data.funds.push({id:crypto.randomUUID(),name,target,balance:0,history:[]});
+  save();e.target.reset();render();
+});
+function fundAction(id,action){
+  const f=data.funds.find(x=>x.id===id);if(!f)return;
+  const raw=prompt(action==="deposit"?"存入金額":"提領金額");
+  if(raw===null)return;
+  let amount;try{amount=calc(raw);}catch(e){return alert("金額格式錯誤");}
+  if(amount<=0)return alert("金額必須大於 0");
+  if(action==="withdraw"&&amount>f.balance)return alert("基金餘額不足");
+  f.balance+=action==="deposit"?amount:-amount;
+  f.history.push({action,amount,date:today()});
+  save();render();
+}
+function deleteRecord(id){
+  if(!confirm("確定刪除這筆紀錄？"))return;
+  data.records=data.records.filter(x=>x.id!==id);save();render();
+}
+function renderRecords(){
+  const list=$("recordList");
+  if(!data.records.length){list.innerHTML='<div class="empty">還沒有記帳紀錄 ♡</div>';return;}
+  list.innerHTML=data.records.map(r=>`
+    <div class="row between">
+      <div><strong>${esc(r.category)}</strong><br><small>${dateText(r.date)} · ${esc(r.note||"無備註")}</small></div>
+      <div style="text-align:right"><strong>${r.type==="income"?"+":"−"}${money(r.amount)}</strong>
+      <br><button class="danger" onclick="deleteRecord('${r.id}')">刪除</button></div>
+    </div><hr>`).join("");
+}
+function renderFunds(){
+  $("fundList").innerHTML=data.funds.length?data.funds.map(f=>`
+    <div class="card">
+      <div class="row between"><h3>${esc(f.name)}</h3><span class="pill">${Math.min(100,Math.round(f.balance/f.target*100))}%</span></div>
+      <p>${money(f.balance)} / ${money(f.target)}</p>
+      <div style="height:8px;background:#eee;border-radius:10px;overflow:hidden">
+        <div style="height:100%;width:${Math.min(100,f.balance/f.target*100)}%;background:#c99e98"></div>
+      </div>
+      <div class="actions">
+        <button onclick="fundAction('${f.id}','deposit')">存入</button>
+        <button onclick="fundAction('${f.id}','withdraw')">提領</button>
+        <button class="danger" onclick="deleteFund('${f.id}')">刪除基金</button>
+      </div>
+    </div>`).join(""):'<div class="card empty">還沒有基金</div>';
+}
+function deleteFund(id){
+  if(!confirm("確定刪除此基金？"))return;
+  data.funds=data.funds.filter(f=>f.id!==id);save();render();
+}
+function selectedMonth(){return $("homeMonth").value||monthNow();}
+function monthRecords(m){return data.records.filter(r=>r.date.startsWith(m));}
+function renderHome(){
+  const rs=monthRecords(selectedMonth());
+  const income=rs.filter(r=>r.type==="income").reduce((s,r)=>s+r.amount,0);
+  const expense=rs.filter(r=>r.type==="expense").reduce((s,r)=>s+r.amount,0);
+  $("homeIncome").textContent=money(income);
+  $("homeExpense").textContent=money(expense);
+  $("homeBalance").textContent=money(income-expense);
+  $("homeBudget").textContent=money(data.budget);
+  const recent=data.records.slice(0,5);
+  $("recentRecords").innerHTML=recent.length?recent.map(r=>
+    `<div class="row between"><span>${esc(r.category)} <small>${dateText(r.date)}</small></span><strong>${r.type==="income"?"+":"−"}${money(r.amount)}</strong></div><hr>`
+  ).join(""):'<div class="empty">還沒有紀錄</div>';
+  const due=data.items.filter(i=>i.cooldownDate&&i.cooldownDate<=today());
+  $("homeReminders").textContent=due.length?`有 ${due.length} 件商品冷靜期已到，可以重新考慮囉。`:"目前沒有到期的冷靜期提醒 ♡";
+}
+function renderStats(){
+  const m=$("statsMonth").value||monthNow(),rs=monthRecords(m);
+  const inc=rs.filter(r=>r.type==="income").reduce((s,r)=>s+r.amount,0);
+  const exp=rs.filter(r=>r.type==="expense").reduce((s,r)=>s+r.amount,0);
+  $("statsIncome").textContent=money(inc);$("statsExpense").textContent=money(exp);
+  const cats={};
+  rs.filter(r=>r.type==="expense").forEach(r=>cats[r.category]=(cats[r.category]||0)+r.amount);
+  const entries=Object.entries(cats).sort((a,b)=>b[1]-a[1]);
+  $("categoryStats").innerHTML=entries.length?entries.map(([k,v])=>
+    `<div class="row between"><span>${esc(k)}</span><strong>${money(v)}</strong></div><hr>`
+  ).join(""):'<div class="empty">這個月還沒有支出</div>';
+}
+const qNames={
+  wantUrgent:"想要＋急需｜願望清單",
+  needUrgent:"需要＋急需｜急需購物",
+  wantLater:"想要＋非急需｜想買但先存下",
+  needLater:"需要＋非急需｜非急需購物"
+};
+function openQuadrant(q){
+  currentQuadrant=q;$("quadrantTitle").textContent=qNames[q];
+  $("quadrantDetail").classList.remove("hidden");renderItems();
+  $("quadrantDetail").scrollIntoView({behavior:"smooth"});
+}
+function closeQuadrant(){$("quadrantDetail").classList.add("hidden");}
+$("itemForm").addEventListener("submit",async e=>{
+  e.preventDefault();
+  const file=$("itemPhoto").files[0];
+  let photo="";
+  if(file){
+    if(file.size>5*1024*1024)return alert("照片請選擇 5MB 以下的檔案");
+    photo=await resizeImage(file);
+  }
+  const cooldown=Number($("itemCooldown").value);
+  const d=new Date();d.setDate(d.getDate()+cooldown);
+  data.items.push({
+    id:crypto.randomUUID(),quadrant:currentQuadrant,
+    name:$("itemName").value.trim(),price:Number($("itemPrice").value)||0,
+    note:$("itemNote").value.trim(),photo,
+    created:today(),cooldownDate:cooldown?d.toISOString().slice(0,10):""
+  });
+  save();e.target.reset();renderItems();renderShoppingStats();
+});
+function resizeImage(file){
+  return new Promise(resolve=>{
+    const img=new Image(),url=URL.createObjectURL(file);
+    img.onload=()=>{
+      const scale=Math.min(1,900/Math.max(img.width,img.height));
+      const c=document.createElement("canvas");c.width=img.width*scale;c.height=img.height*scale;
+      c.getContext("2d").drawImage(img,0,0,c.width,c.height);
+      URL.revokeObjectURL(url);resolve(c.toDataURL("image/jpeg",.75));
+    };img.src=url;
+  });
+}
+function renderItems(){
+  const items=data.items.filter(i=>i.quadrant===currentQuadrant);
+  $("itemList").innerHTML=items.length?items.map(i=>`
+    <div class="card">
+      <div class="item">
+        ${i.photo?`<img src="${i.photo}" alt="商品照片">`:'<div style="width:68px;height:68px;border-radius:12px;background:#f4e6e3;display:grid;place-items:center">♡</div>'}
+        <div class="info"><strong>${esc(i.name)}</strong><div>${money(i.price)}</div>
+        <small>${i.cooldownDate?"冷靜期至 "+dateText(i.cooldownDate):"未設定冷靜期"}</small></div>
+      </div>
+      ${i.note?`<p class="muted">${esc(i.note)}</p>`:""}
+      <div class="actions">
+        <button onclick="moveItem('${i.id}')">移動象限</button>
+        <button onclick="buyItem('${i.id}')">已購買</button>
+        <button class="danger" onclick="removeItem('${i.id}')">刪除</button>
+      </div>
+    </div>`).join(""):'<div class="card empty">這裡還沒有商品，新增一件吧 ♡</div>';
+}
+function moveItem(id){
+  const options=Object.entries(qNames).map(([k,v],n)=>`${n+1}. ${v}`).join("\n");
+  const n=prompt("輸入要移動到的象限編號：\n"+options);
+  if(n===null)return;
+  const keys=Object.keys(qNames),q=keys[Number(n)-1];
+  if(!q)return alert("請輸入 1～4");
+  const item=data.items.find(i=>i.id===id);if(item)item.quadrant=q;
+  save();renderItems();renderShoppingStats();
+}
+function buyItem(id){
+  const i=data.items.find(x=>x.id===id);if(!i)return;
+  const raw=prompt("實際購買金額：",String(i.price));
+  if(raw===null)return;
+  let actual;try{actual=calc(raw);}catch(e){return alert("金額格式錯誤");}
+  if(actual<0)return alert("金額不能小於 0");
+  data.bought.push({...i,actualPrice:actual,boughtDate:today()});
+  data.items=data.items.filter(x=>x.id!==id);
+  save();renderItems();renderShoppingStats();
+  alert("已移至購買紀錄。若要列入支出，請另外新增一筆記帳。");
+}
+function removeItem(id){
+  if(!confirm("確定刪除商品？"))return;
+  data.items=data.items.filter(i=>i.id!==id);save();renderItems();renderShoppingStats();
+}
+function renderShoppingStats(){
+  const total=data.items.reduce((s,i)=>s+i.price,0);
+  const bought=data.bought.reduce((s,i)=>s+i.actualPrice,0);
+  $("shoppingStats").innerHTML=`目前待買 ${data.items.length} 件 · 預估 ${money(total)}<br>已購買 ${data.bought.length} 件 · 實際 ${money(bought)}`;
+}
+function saveBudget(){
+  data.budget=Math.max(0,Number($("budgetInput").value)||0);save();render();
+  alert("預算已儲存 ♡");
+}
+function backup(){
+  const blob=new Blob([JSON.stringify(data,null,2)],{type:"application/json"});
+  const url=URL.createObjectURL(blob),a=document.createElement("a");
+  a.href=url;a.download="my-little-journal-backup.json";a.click();
+  URL.revokeObjectURL(url);
+}
+async function restoreBackup(){
+  const file=$("restoreFile").files[0];if(!file)return alert("請先選擇備份檔案");
+  if(!confirm("還原會覆蓋目前資料，確定繼續嗎？"))return;
+  try{
+    const d=JSON.parse(await file.text());
+    if(!Array.isArray(d.records)||!Array.isArray(d.items)||!Array.isArray(d.funds))throw Error();
+    data={...defaults,...d};save();render();alert("備份還原完成 ♡");
+  }catch(e){alert("檔案格式不正確，無法還原。");}
+}
+function esc(s){
+  return String(s??"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
 }
 function render(){
- let now=today().slice(0,7),month=data.records.filter(r=>r.date.startsWith(now)),income=month.filter(r=>r.type==='income').reduce((a,r)=>a+r.amount,0),expense=month.filter(r=>r.type==='expense').reduce((a,r)=>a+r.amount,0),funds=data.funds.reduce((a,f)=>a+f.balance,0);
- $('today').textContent=fmt(today());$('homeIncome').textContent=money(income);$('homeExpense').textContent=money(expense);$('homeBalance').textContent=money(income-expense-funds);$('homeWish').textContent=data.products.filter(p=>!p.bought).length+' 件';
- $('budgetText').textContent=`已使用 ${money(expense)}／預算 ${money(data.budget)}`;$('budgetBar').style.width=Math.min(100,data.budget?expense/data.budget*100:0)+'%';
- $('recent').innerHTML=data.records.slice(0,5).map(r=>`<div class="record"><span>${escapeHTML(r.category)} · ${escapeHTML(r.note||'未填寫備註')}<div class="muted">${fmt(r.date)}</div></span><strong class="${r.type==='income'?'positive':'negative'}">${r.type==='income'?'+':'-'}${money(r.amount)}</strong></div>`).join('')||'<div class="muted">還沒有記帳紀錄</div>';
- let due=data.products.filter(p=>!p.bought&&p.remind&&p.remind<=today());$('reminders').innerHTML=due.map(p=>`${escapeHTML(p.name)}：冷靜期已到（${fmt(p.remind)}）`).join('<br>')||'目前沒有到期提醒 ♡';
- $('recordList').innerHTML=data.records.map(r=>`<div class="record"><span>${escapeHTML(r.category)} · ${escapeHTML(r.note||'')}<div class="muted">${fmt(r.date)}</div></span><strong class="${r.type==='income'?'positive':'negative'}">${r.type==='income'?'+':'-'}${money(r.amount)}</strong></div>`).join('')||'<div class="muted">尚無紀錄</div>';
- $('fundList').innerHTML=data.funds.map(f=>`<div class="card"><h3>${escapeHTML(f.name)}</h3><strong>${money(f.balance)}</strong><div class="muted">目標 ${money(f.target)} · 完成 ${Math.min(100,Math.round(f.balance/f.target*100))}%</div><div style="height:7px;background:#eee;border-radius:8px;margin:10px 0"><div style="height:7px;width:${Math.min(100,f.balance/f.target*100)}%;background:var(--green);border-radius:8px"></div></div><button class="btn" onclick="fundAction(${f.id},'add')">存入</button> <button class="btn" onclick="fundAction(${f.id},'take')">領出</button></div>`).join('')||'<div class="muted">還沒有基金</div>';
- let allIncome=data.records.filter(r=>r.type==='income').reduce((a,r)=>a+r.amount,0),allExpense=data.records.filter(r=>r.type==='expense').reduce((a,r)=>a+r.amount,0);
- $('sIncome').textContent=money(allIncome);$('sExpense').textContent=money(allExpense);$('sFunds').textContent=money(funds);$('sBought').textContent=data.products.filter(p=>p.bought).length+' 件';
- let cats={};data.records.filter(r=>r.type==='expense').forEach(r=>cats[r.category]=(cats[r.category]||0)+r.amount);
- $('categoryStats').innerHTML=Object.entries(cats).sort((a,b)=>b[1]-a[1]).map(([k,v])=>`<div class="record"><span>${escapeHTML(k)}</span><strong>${money(v)}</strong></div>`).join('')||'<div class="muted">還沒有支出資料</div>';
- $('budgetInput').value=data.budget;renderShopping();
+  $("budgetInput").value=data.budget;
+  renderHome();renderRecords();renderFunds();renderStats();renderShoppingStats();
+  if(!$("quadrantDetail").classList.contains("hidden"))renderItems();
 }
-document.querySelectorAll('nav button').forEach(b=>b.onclick=()=>{document.querySelectorAll('nav button').forEach(x=>x.classList.remove('active'));document.querySelectorAll('.page').forEach(x=>x.classList.remove('active'));b.classList.add('active');$(b.dataset.page).classList.add('active')});
-function saveBudget(){data.budget=Math.max(0,Number($('budgetInput').value)||0);save();alert('預算已儲存')}
-function backup(){let blob=new Blob([JSON.stringify(data,null,2)],{type:'application/json'}),a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download='my-little-journal-backup-'+today()+'.json';a.click();URL.revokeObjectURL(a.href)}
-function restore(){let file=$('restoreFile').files[0];if(!file)return alert('請先選擇備份檔');let r=new FileReader();r.onload=()=>{try{let d=JSON.parse(r.result);if(!d.records||!d.products||!d.funds)throw Error();if(confirm('還原會覆蓋目前資料，確定繼續？')){data=d;save();alert('資料還原完成')}}catch(e){alert('檔案格式不正確，無法還原')}};r.readAsText(file)}
-$('rDate').value=today();render();
+$("homeMonth").addEventListener("change",renderHome);
+$("statsMonth").addEventListener("change",renderStats);
+render();
 </script>
 </body>
 </html>
