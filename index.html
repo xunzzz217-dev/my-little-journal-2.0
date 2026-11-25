@@ -1,1440 +1,489 @@
-<!DOCTYPE html>
+
+<!doctype html>
 <html lang="zh-Hant">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="theme-color" content="#f8f3ef">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#f7f5f1">
 <meta name="apple-mobile-web-app-capable" content="yes">
-<link rel="manifest" href="manifest.json">
 <title>MY LITTLE JOURNAL</title>
-
+<link rel="manifest" href="manifest.webmanifest">
 <style>
 :root {
-  --bg: #f8f3ef;
-  --card: #fffdfb;
-  --pink: #ead4d2;
-  --pink-light: #f3e5e2;
-  --brown: #725b53;
-  --muted: #a89790;
-  --line: #eee4de;
-  --green: #a9b7a2;
+  --bg:#f7f5f1;
+  --paper:#fffefa;
+  --ink:#514d49;
+  --muted:#9b958d;
+  --line:#eee9e1;
+  --accent:#c99e9c;
+  --soft:#f4e9e7;
 }
-
-* {
-  box-sizing: border-box;
+*{box-sizing:border-box}
+body{
+  margin:0;
+  background:var(--bg);
+  color:var(--ink);
+  font-family:-apple-system,BlinkMacSystemFont,"Noto Sans TC",sans-serif;
+  padding-bottom:90px;
 }
-
-body {
-  margin: 0;
-  background: var(--bg);
-  color: var(--brown);
-  font-family: -apple-system, BlinkMacSystemFont, "Noto Sans TC", sans-serif;
+.app{max-width:760px;margin:auto;padding:20px 16px}
+.top{display:flex;justify-content:space-between;margin-bottom:20px}
+.brand{font-size:12px;letter-spacing:2px;font-weight:bold}
+.page{display:none}
+.page.active{display:block}
+h1{font-size:25px}
+h2{font-size:18px}
+.card{
+  background:var(--paper);
+  border:1px solid var(--line);
+  border-radius:18px;
+  padding:16px;
+  margin:12px 0;
 }
-
-header {
-  padding: 25px 20px 15px;
-  max-width: 900px;
-  margin: auto;
+.hero{
+  background:linear-gradient(135deg,var(--soft),var(--paper));
+  padding:22px;
+  border-radius:22px;
 }
-
-header small {
-  letter-spacing: 3px;
-  color: var(--muted);
-  font-size: 10px;
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.stat{
+  background:var(--paper);
+  border:1px solid var(--line);
+  border-radius:15px;
+  padding:14px;
 }
-
-h1 {
-  font-family: Georgia, serif;
-  font-size: 25px;
-  letter-spacing: 2px;
-  margin: 5px 0;
+.stat strong{display:block;font-size:21px;margin-top:6px}
+.sub{font-size:12px;color:var(--muted)}
+.btn{
+  border:0;border-radius:12px;
+  background:var(--accent);
+  color:white;padding:10px 14px;
 }
-
-header p {
-  color: var(--muted);
-  font-size: 12px;
-  margin: 0;
+.btn.secondary{background:var(--soft);color:var(--ink)}
+.field{
+  width:100%;padding:11px;
+  border:1px solid var(--line);
+  border-radius:12px;background:white;
 }
-
-nav {
-  display: flex;
-  gap: 8px;
-  overflow-x: auto;
-  padding: 10px 16px 15px;
-  max-width: 900px;
-  margin: auto;
+label{display:block;font-size:12px;color:var(--muted);margin:10px 0 6px}
+.row{display:flex;align-items:center;gap:9px}
+.between{justify-content:space-between}
+.grow{flex:1}
+.list{display:flex;flex-direction:column;gap:8px}
+.item{
+  display:flex;align-items:center;gap:10px;
+  background:white;border:1px solid var(--line);
+  padding:11px;border-radius:13px;
 }
-
-nav button {
-  white-space: nowrap;
-  border: 1px solid var(--line);
-  background: #fff9;
-  border-radius: 30px;
-  padding: 9px 15px;
-  color: var(--brown);
+.nav{
+  position:fixed;bottom:0;left:0;right:0;
+  background:#fffefaed;border-top:1px solid var(--line);
+  padding:8px 5px calc(8px + env(safe-area-inset-bottom));
 }
-
-nav button.active {
-  background: var(--brown);
-  color: white;
+.navinner{
+  max-width:760px;margin:auto;
+  display:grid;grid-template-columns:repeat(5,1fr);
 }
-
-main {
-  max-width: 900px;
-  margin: auto;
-  padding: 5px 16px 100px;
+.nav button{
+  border:0;background:transparent;color:var(--muted);
+  font-size:11px;padding:7px;
 }
-
-.page {
-  display: none;
+.nav button b{display:block;font-size:20px}
+.nav button.active{background:var(--soft);border-radius:12px;color:var(--ink)}
+.quads{display:grid;grid-template-columns:1fr 1fr;gap:9px}
+.quad{padding:13px;border-radius:15px;min-height:110px;background:#f8eeea}
+.quad:nth-child(2){background:#f5f1e5}
+.quad:nth-child(3){background:#edf2ed}
+.quad:nth-child(4){background:#efedf4}
+.progress{height:8px;background:#eee;border-radius:20px;overflow:hidden;margin:8px 0}
+.progress i{display:block;height:100%;background:var(--accent)}
+.themegrid{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}
+.theme{border:1px solid var(--line);border-radius:12px;padding:10px;background:white}
+.hidden{display:none!important}
+.modalback{
+  display:none;position:fixed;inset:0;background:#0005;
+  align-items:flex-end;z-index:20;
 }
-
-.page.active {
-  display: block;
-}
-
-.heading {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin: 12px 2px 15px;
-}
-
-.heading h2 {
-  font-size: 19px;
-  margin: 0;
-}
-
-.card {
-  background: var(--card);
-  border: 1px solid var(--line);
-  border-radius: 19px;
-  padding: 16px;
-  margin-bottom: 12px;
-  box-shadow: 0 8px 24px #8c706012;
-}
-
-.grid {
-  display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: 10px;
-}
-
-.wide {
-  grid-column: 1 / -1;
-}
-
-.metric {
-  color: var(--muted);
-  font-size: 11px;
-}
-
-.amount {
-  font-family: Georgia, serif;
-  font-size: 24px;
-  margin-top: 5px;
-}
-
-.primary {
-  background: var(--brown);
-  color: white;
-  border: none;
-  border-radius: 13px;
-  padding: 10px 15px;
-}
-
-.soft {
-  background: var(--pink-light);
-  color: var(--brown);
-  border: none;
-  border-radius: 12px;
-  padding: 9px 12px;
-}
-
-.danger {
-  background: #f7e7e5;
-  color: #9b5d58;
-  border: none;
-  border-radius: 10px;
-  padding: 7px 10px;
-}
-
-.item {
-  padding: 12px 0;
-  border-bottom: 1px solid var(--line);
-}
-
-.item:last-child {
-  border-bottom: none;
-}
-
-.row {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 10px;
-}
-
-.sub {
-  color: var(--muted);
-  font-size: 12px;
-}
-
-input,
-select,
-textarea {
-  width: 100%;
-  border: 1px solid var(--line);
-  background: #fffdfb;
-  border-radius: 11px;
-  padding: 11px;
-  color: var(--brown);
-  font: inherit;
-  margin: 5px 0 10px;
-}
-
-textarea {
-  min-height: 70px;
-}
-
-label {
-  font-size: 12px;
-  color: var(--muted);
-}
-
-.progress {
-  height: 7px;
-  background: #f0e8e3;
-  border-radius: 20px;
-  overflow: hidden;
-  margin: 8px 0;
-}
-
-.progress span {
-  display: block;
-  height: 100%;
-  background: #c8aaa3;
-  border-radius: 20px;
-}
-
-.quad {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 9px;
-}
-
-.quadbox {
-  background: var(--card);
-  border: 1px solid var(--line);
-  border-radius: 16px;
-  padding: 12px;
-  min-height: 110px;
-}
-
-.quadbox h3 {
-  font-size: 12px;
-  color: var(--muted);
-  margin: 0 0 8px;
-}
-
-.photo {
-  width: 100%;
-  max-height: 180px;
-  object-fit: cover;
-  border-radius: 12px;
-}
-
-.empty {
-  text-align: center;
-  color: var(--muted);
-  padding: 25px 10px;
-  font-size: 13px;
-}
-
-.modal {
-  position: fixed;
-  inset: 0;
-  background: #4c39394d;
-  display: none;
-  align-items: flex-end;
-  justify-content: center;
-  padding: 12px;
-  z-index: 5;
-}
-
-.modal.show {
-  display: flex;
-}
-
-.sheet {
-  background: var(--card);
-  border-radius: 23px;
-  padding: 20px;
-  width: min(100%, 560px);
-  max-height: 88vh;
-  overflow: auto;
-}
-
-footer {
-  position: fixed;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  background: #fffdf2ed;
-  border-top: 1px solid var(--line);
-  padding: 12px;
-  text-align: center;
-  color: var(--muted);
-  font-size: 10px;
-}
-
-@media (min-width: 650px) {
-  .grid {
-    grid-template-columns: repeat(4, minmax(0, 1fr));
-  }
-  .quad {
-    grid-template-columns: repeat(4, minmax(0, 1fr));
-  }
-  .modal {
-    align-items: center;
-  }
+.modalback.show{display:flex}
+.modal{
+  width:100%;max-width:760px;margin:auto;
+  background:var(--paper);border-radius:22px 22px 0 0;
+  padding:20px;max-height:85vh;overflow:auto;
 }
 </style>
-</head><body>
-
-<header>
-  <small>YOUR LITTLE LIFE ORGANIZER</small>
-  <h1>MY LITTLE JOURNAL</h1>
-  <p>把日常，好好收藏起來 ♡</p>
-</header>
-
-<nav id="tabs">
-  <button class="active" data-page="home">首頁</button>
-  <button data-page="ledger">記帳</button>
-  <button data-page="funds">基金・目標</button>
-  <button data-page="stats">統計</button>
-  <button data-page="shopping">購物</button>
-  <button data-page="settings">設定</button>
-</nav>
-
-<main>
+</head>
+<body>
+<div class="app">
+<div class="top">
+  <div class="brand">MY LITTLE JOURNAL ✦</div>
+  <div class="sub" id="date"></div>
+</div>
 
 <!-- 首頁 -->
 <section class="page active" id="home">
-  <div class="heading">
-    <h2>今天也要好好生活</h2>
-    <span class="sub" id="today"></span>
+  <div class="hero">
+    <div class="sub" id="homeDate"></div>
+    <h1>把日子，慢慢收進口袋 ♡</h1>
+    <div class="sub">今天也留一點時間給自己。</div>
   </div>
-
-  <div class="grid">
-    <div class="card">
-      <div class="metric">目前可用餘額</div>
-      <div class="amount" id="cash">NT$0</div>
+  <div class="grid2">
+    <div class="stat"><small>本月收入</small><strong id="income">$0</strong></div>
+    <div class="stat"><small>本月支出</small><strong id="expense">$0</strong></div>
+    <div class="stat"><small>預算剩餘</small><strong id="remaining">$0</strong></div>
+    <div class="stat"><small>目標存款</small><strong id="fundTotal">$0</strong></div>
+  </div>
+  <div class="card">
+    <div class="row between">
+      <h2>今天的小事</h2>
+      <button class="btn secondary" onclick="addTask()">＋新增</button>
     </div>
-
-    <div class="card">
-      <div class="metric">本月預算剩餘</div>
-      <div class="amount" id="budgetRemain">NT$0</div>
-    </div>
-
-    <div class="card">
-      <div class="metric">本月收入</div>
-      <div class="amount" id="incomeTotal">NT$0</div>
-    </div>
-
-    <div class="card">
-      <div class="metric">本月支出</div>
-      <div class="amount" id="expenseTotal">NT$0</div>
-    </div>
-
-    <div class="card wide">
-      <b>預算使用狀況</b>
-      <div id="homeBudgets"></div>
-    </div>
-
-    <div class="card wide">
-      <b>最近記帳</b>
-      <div id="recent"></div>
-    </div>
+    <div id="tasks" class="list"></div>
+  </div>
+  <div class="card">
+    <h2>今日隨手記</h2>
+    <textarea id="dailyNote" class="field" rows="3" placeholder="今天有什麼想記下來的？"></textarea>
+    <button class="btn" style="margin-top:10px" onclick="saveNote()">儲存</button>
   </div>
 </section>
 
 <!-- 記帳 -->
 <section class="page" id="ledger">
-  <div class="heading">
-    <h2>記帳</h2>
-    <button class="primary" onclick="openLedger()">＋ 新增紀錄</button>
+  <h1>記帳</h1>
+  <div class="sub">每一筆收支，都清楚整理。</div>
+  <div class="row" style="margin:15px 0">
+    <button class="btn secondary" onclick="setType('expense')">支出</button>
+    <button class="btn secondary" onclick="setType('income')">收入</button>
   </div>
-
   <div class="card">
-    <div class="row">
-      <b>收支紀錄</b>
-      <span class="sub">支出會自動扣除對應預算</span>
+    <h2 id="recordTitle">新增支出</h2>
+    <label>金額（支援算式）</label>
+    <input id="amount" class="field" placeholder="例如 20+38*2">
+    <div class="row" style="margin-top:8px;flex-wrap:wrap">
+      <button class="btn secondary" onclick="appendOp('+')">＋</button>
+      <button class="btn secondary" onclick="appendOp('-')">－</button>
+      <button class="btn secondary" onclick="appendOp('*')">×</button>
+      <button class="btn secondary" onclick="appendOp('/')">÷</button>
+      <button class="btn secondary" onclick="calculate()">＝</button>
     </div>
-    <div id="ledgerList"></div>
+    <div id="preview" class="sub"></div>
+    <label>分類</label>
+    <select id="category" class="field">
+      <option>餐飲</option><option>交通</option>
+      <option>生活用品</option><option>購物</option>
+      <option>娛樂</option><option>學習</option>
+      <option>其他</option>
+    </select>
+    <label>使用哪個預算</label>
+    <select id="source" class="field"></select>
+    <label>日期</label>
+    <input id="recordDate" type="date" class="field">
+    <label>備註</label>
+    <input id="memo" class="field">
+    <button class="btn" style="width:100%;margin-top:15px" onclick="addRecord()">儲存紀錄</button>
   </div>
-</section>
-
-<!-- 基金與目標 -->
-<section class="page" id="funds">
-  <div class="heading">
-    <h2>基金・目標</h2>
-    <button class="primary" onclick="openSaving()">＋ 新增項目</button>
-  </div>
-
   <div class="card">
-    <div class="row">
-      <b>基金｜必需品</b>
-      <span class="sub">必要用品準備</span>
-    </div>
-    <div id="fundList"></div>
-  </div>
-
-  <div class="card">
-    <div class="row">
-      <b>目標｜想要的生活</b>
-      <span class="sub">願望存錢</span>
-    </div>
-    <div id="goalList"></div>
-  </div>
-</section>
-
-<!-- 統計 -->
-<section class="page" id="stats">
-  <div class="heading">
-    <h2>統計</h2>
-    <span class="sub" id="statMonth"></span>
-  </div>
-
-  <div class="grid">
-    <div class="card">
-      <div class="metric">總收入</div>
-      <div class="amount" id="sIncome">0</div>
-    </div>
-
-    <div class="card">
-      <div class="metric">總支出</div>
-      <div class="amount" id="sExpense">0</div>
-    </div>
-
-    <div class="card wide">
-      <b>支出分類</b>
-      <div id="statCats"></div>
-    </div>
-
-    <div class="card wide">
-      <b>存款進度</b>
-      <div id="statSavings"></div>
-    </div>
+    <h2>近期紀錄</h2>
+    <div id="records" class="list"></div>
   </div>
 </section>
 
 <!-- 購物 -->
 <section class="page" id="shopping">
-  <div class="heading">
-    <h2>購物管理</h2>
-    <button class="primary" onclick="openShop()">＋ 新增商品</button>
+  <h1>購物管理</h1>
+  <div class="sub">先放進清單，想清楚再決定。</div>
+  <button class="btn" style="margin:15px 0" onclick="addShop()">＋新增商品</button>
+  <div class="quads">
+    <div class="quad"><h3>♡ 想要且需要</h3><div id="q0"></div></div>
+    <div class="quad"><h3>✦ 需要但不急</h3><div id="q1"></div></div>
+    <div class="quad"><h3>☁ 想要但可等等</h3><div id="q2"></div></div>
+    <div class="quad"><h3>… 暫時不買</h3><div id="q3"></div></div>
   </div>
+  <div class="card"><h2>全部商品</h2><div id="shops" class="list"></div></div>
+</section>
 
+<!-- 目標 -->
+<section class="page" id="goals">
+  <h1>目標與基金</h1>
   <div class="card">
-    <div class="row">
-      <b>四象限購物清單</b>
-      <span class="sub">商品可以自由移動</span>
+    <div class="row between">
+      <h2>我的基金</h2>
+      <button class="btn" onclick="addGoal()">＋新增</button>
     </div>
-    <div class="quad" id="quad"></div>
-  </div>
-
-  <div class="card">
-    <div class="row">
-      <b>已少花</b>
-      <span class="sub" id="savedAmount">NT$0</span>
-    </div>
-  </div>
-
-  <div class="card">
-    <b>已購買</b>
-    <div id="boughtList"></div>
+    <div id="goalsList" class="list"></div>
   </div>
 </section>
 
-<!-- 設定 -->
-<section class="page" id="settings">
-  <div class="heading">
-    <h2>設定</h2>
-    <span class="sub">收納你的使用習慣</span>
-  </div>
-
+<!-- 我的 -->
+<section class="page" id="me">
+  <h1>我的小天地</h1>
   <div class="card">
-    <details open>
-      <summary><b>預算分配</b></summary>
-      <p class="sub">
-        新增分類後會同步出現在支出記帳及基金／目標存入來源。
-      </p>
-      <div id="budgetSettings"></div>
-      <button class="soft" onclick="addBudget()">＋ 新增預算分類</button>
-    </details>
+    <h2>主題色</h2>
+    <div class="themegrid" id="themes"></div>
   </div>
-
   <div class="card">
-    <details>
-      <summary><b>收入分類</b></summary>
-      <div id="incomeCats"></div>
-      <button class="soft" onclick="addIncomeCat()">＋ 新增收入分類</button>
-    </details>
+    <h2>裝飾元素</h2>
+    <label><input type="checkbox" id="decor" checked onchange="toggleDecor()"> 顯示裝飾</label>
   </div>
-
   <div class="card">
-    <details>
-      <summary><b>每月預算設定</b></summary>
-      <label>每月分配日期</label>
-      <input id="budgetDay" type="number" min="1" max="28" value="1">
-      <p class="sub">預算分配不會重複計算成收入。</p>
-    </details>
+    <h2>預算分配</h2>
+    <div id="budgetSettings"></div>
+    <button class="btn secondary" onclick="addBudget()">＋新增分類</button>
+    <button class="btn" onclick="saveBudgets()">儲存預算</button>
   </div>
-
   <div class="card">
-    <details>
-      <summary><b>資料備份與還原</b></summary>
-      <p class="sub">備份包含紀錄、分類、基金目標、購物項目與照片。</p>
-      <button class="primary" onclick="backup()">匯出備份 JSON</button>
-      <label class="soft">
-        匯入備份
-        <input type="file" accept="application/json" onchange="restore(event)">
-      </label>
-    </details>
-  </div>
-
-  <div class="card">
-    <details>
-      <summary><b>資料儲存</b></summary>
-      <p class="sub">
-        資料儲存在目前裝置的瀏覽器，請定期匯出備份。
-      </p>
-      <button class="danger" onclick="resetAll()">清除所有資料</button>
-    </details>
+    <h2>資料備份</h2>
+    <button class="btn secondary" onclick="backup()">匯出完整備份</button>
+    <label class="btn secondary">匯入備份<input type="file" hidden onchange="restore(event)"></label>
   </div>
 </section>
+</div>
 
-</main>
+<nav class="nav">
+<div class="navinner">
+<button class="active" data-page="home" onclick="go('home',this)"><b>⌂</b>首頁</button>
+<button data-page="ledger" onclick="go('ledger',this)"><b>＋</b>記帳</button>
+<button data-page="shopping" onclick="go('shopping',this)"><b>♡</b>購物</button>
+<button data-page="goals" onclick="go('goals',this)"><b>☆</b>目標</button>
+<button data-page="me" onclick="go('me',this)"><b>☷</b>我的</button>
+</div>
+</nav>
 
-<footer>
-  MADE WITH CARE · MY LITTLE JOURNAL
-</footer>
-
-<div class="modal" id="modal" onclick="if(event.target===this)closeModal()">
-  <div class="sheet">
-    <div class="row">
-      <h3 id="modalTitle">新增</h3>
-      <button class="soft" onclick="closeModal()">關閉</button>
-    </div>
-    <div id="modalBody"></div>
-  </div>
-</div><script>
-const DB='mlj-db', STORE='state';
-
-let state={
-  transactions:[],
-  budgets:[
-    {id:uid(),name:'日常生活',amount:3000},
-    {id:uid(),name:'購物',amount:1500},
-    {id:uid(),name:'交通',amount:1000}
-  ],
-  incomeCats:['零用錢','薪水','獎金','其他收入'],
-  savings:[],
-  shopping:[],
-  budgetDay:1
+<script>
+const $=id=>document.getElementById(id);
+const today=()=>new Date().toISOString().slice(0,10);
+const money=n=>'$'+Number(n||0).toLocaleString('zh-TW');
+let data={
+ records:[],
+ budgets:[
+  {name:'生活費',amount:3000},
+  {name:'娛樂費',amount:1000},
+  {name:'購物',amount:1000},
+  {name:'儲蓄',amount:2000}
+ ],
+ goals:[
+  {id:1,name:'隱眼基金',target:2000,balance:0},
+  {id:2,name:'彼安諾基金',target:3000,balance:0}
+ ],
+ shops:[],tasks:[],notes:{},theme:'奶油灰',decor:true,type:'expense'
 };
-
-function uid(){
-  return Math.random().toString(36).slice(2,10);
+let db;
+function openDB(){
+ return new Promise(resolve=>{
+  let r=indexedDB.open('MLJ',1);
+  r.onupgradeneeded=()=>r.result.createObjectStore('data');
+  r.onsuccess=()=>resolve(r.result);
+  r.onerror=()=>resolve(null);
+ });
 }
-
-function money(n){
-  return 'NT$'+Math.round(Number(n)||0).toLocaleString('zh-TW');
+async function init(){
+ db=await openDB();
+ if(db){
+  let tx=db.transaction('data');
+  let r=tx.objectStore('data').get('main');
+  r.onsuccess=()=>{if(r.result)data={...data,...r.result};render()};
+  r.onerror=()=>render();
+ }else render();
 }
-
-function month(){
-  return new Date().toISOString().slice(0,7);
+function save(){
+ if(!db)return;
+ let tx=db.transaction('data','readwrite');
+ tx.objectStore('data').put(data,'main');
 }
-
-function dateNow(){
-  return new Date().toISOString().slice(0,10);
+function go(id,btn){
+ document.querySelectorAll('.page').forEach(x=>x.classList.remove('active'));
+ $(id).classList.add('active');
+ document.querySelectorAll('[data-page]').forEach(x=>x.classList.remove('active'));
+ btn.classList.add('active');
+ window.scrollTo(0,0);
 }
-
-function dbOpen(){
-  return new Promise((resolve,reject)=>{
-    let r=indexedDB.open(DB,1);
-    r.onupgradeneeded=()=>r.result.createObjectStore(STORE);
-    r.onsuccess=()=>resolve(r.result);
-    r.onerror=()=>reject(r.error);
-  });
+function setType(type){
+ data.type=type;
+ $('recordTitle').textContent=type==='expense'?'新增支出':'新增收入';
 }
-
-async function persist(){
-  try{
-    let db=await dbOpen();
-    let tx=db.transaction(STORE,'readwrite');
-    tx.objectStore(STORE).put(state,'main');
-    tx.oncomplete=()=>db.close();
-  }catch(e){
-    alert('儲存失敗，請先匯出備份。');
-  }
-}
-
-async function load(){
-  try{
-    let db=await dbOpen();
-    let v=await new Promise((res,rej)=>{
-      let r=db.transaction(STORE).objectStore(STORE).get('main');
-      r.onsuccess=()=>res(r.result);
-      r.onerror=()=>rej(r.error);
-    });
-    db.close();
-    if(v)state=v;
-  }catch(e){}
-  render();
-}
-
-function setPage(id){
-  document.querySelectorAll('.page').forEach(x=>
-    x.classList.toggle('active',x.id===id)
-  );
-  document.querySelectorAll('nav button').forEach(x=>
-    x.classList.toggle('active',x.dataset.page===id)
-  );
-  render();
-}
-
-document.querySelectorAll('nav button').forEach(b=>{
-  b.onclick=()=>setPage(b.dataset.page);
-});
-
-function currentBudget(id){
-  let b=state.budgets.find(x=>x.id===id);
-  if(!b)return 0;
-
-  let spent=state.transactions
-    .filter(t=>t.type==='expense'&&t.budgetId===id)
-    .reduce((s,t)=>s+t.amount,0);
-
-  let saved=state.savings
-    .flatMap(x=>x.history||[])
-    .filter(h=>h.budgetId===id)
-    .reduce((s,h)=>s+h.amount,0);
-
-  return b.amount-spent-saved;
-}
-
-function monthTx(type){
-  return state.transactions.filter(t=>
-    t.date?.slice(0,7)===month()&&(!type||t.type===type)
-  );
-}
-
-function cash(){
-  return state.transactions.reduce(
-    (s,t)=>s+(t.type==='income'?t.amount:-t.amount),0
-  )-state.savings.reduce(
-    (s,x)=>s+(x.history||[]).reduce((a,h)=>a+h.amount,0),0
-  );
-}
-
-function render(){
-  document.getElementById('today').textContent=
-    dateNow().replaceAll('-','/');
-
-  let inc=monthTx('income').reduce((s,t)=>s+t.amount,0);
-  let exp=monthTx('expense').reduce((s,t)=>s+t.amount,0);
-
-  document.getElementById('cash').textContent=money(cash());
-  document.getElementById('incomeTotal').textContent=money(inc);
-  document.getElementById('expenseTotal').textContent=money(exp);
-
-  document.getElementById('budgetRemain').textContent=
-    money(state.budgets.reduce(
-      (s,b)=>s+Math.max(0,currentBudget(b.id)),0
-    ));
-
-  document.getElementById('homeBudgets').innerHTML=
-    state.budgets.map(b=>`
-      <div class="item">
-        <div class="row">
-          <span>${esc(b.name)}</span>
-          <span>${money(Math.max(0,currentBudget(b.id)))} / ${money(b.amount)}</span>
-        </div>
-        <div class="progress">
-          <span style="width:${Math.min(
-            100,
-            Math.max(0,(b.amount-currentBudget(b.id))/Math.max(1,b.amount)*100)
-          )}%"></span>
-        </div>
-      </div>
-    `).join('');
-
-  document.getElementById('recent').innerHTML=
-    state.transactions.slice()
-      .sort((a,b)=>b.date.localeCompare(a.date))
-      .slice(0,5)
-      .map(txRow).join('')||'<div class="empty">還沒有紀錄</div>';
-
-  document.getElementById('ledgerList').innerHTML=
-    state.transactions.slice()
-      .sort((a,b)=>b.date.localeCompare(a.date))
-      .map(txRow).join('')||
-      '<div class="empty">新增第一筆收支紀錄吧 ♡</div>';
-
-  document.getElementById('fundList').innerHTML=savingList('fund');
-  document.getElementById('goalList').innerHTML=savingList('goal');
-
-  document.getElementById('sIncome').textContent=money(inc);
-  document.getElementById('sExpense').textContent=money(exp);
-  document.getElementById('statMonth').textContent=month();
-
-  let cats={};
-
-  monthTx('expense').forEach(t=>{
-    cats[t.category]=(cats[t.category]||0)+t.amount;
-  });
-
-  document.getElementById('statCats').innerHTML=
-    Object.entries(cats).map(([k,v])=>`
-      <div class="item row">
-        <span>${esc(k)}</span>
-        <b>${money(v)}</b>
-      </div>
-    `).join('')||'<div class="empty">本月尚無支出</div>';
-
-  document.getElementById('statSavings').innerHTML=
-    state.savings.map(x=>`
-      <div class="item">
-        ${esc(x.name)} · ${money(x.saved)} / ${money(x.target)}
-      </div>
-    `).join('')||'<div class="empty">尚無存款項目</div>';
-
-  renderShopping();
-  renderSettings();
-}
-
-function esc(s){
-  return String(s??'').replace(/[&<>"']/g,c=>({
-    '&':'&amp;',
-    '<':'&lt;',
-    '>':'&gt;',
-    '"':'&quot;',
-    "'":'&#39;'
-  }[c]));
-}
-
-function txRow(t){
-  return `
-    <div class="item row">
-      <div>
-        <b>${esc(t.name)}</b>
-        <div class="sub">${t.date} · ${esc(t.category||'')}</div>
-      </div>
-      <div style="text-align:right">
-        <b>${t.type==='income'?'+':'−'}${money(t.amount)}</b>
-        <div class="actions">
-          <button class="soft smallbtn" onclick="editTx('${t.id}')">編輯</button>
-          <button class="danger smallbtn" onclick="deleteTx('${t.id}')">刪除</button>
-        </div>
-      </div>
-    </div>
-  `;
-}
-
-function openModal(title,html){
-  document.getElementById('modalTitle').textContent=title;
-  document.getElementById('modalBody').innerHTML=html;
-  document.getElementById('modal').classList.add('show');
-}
-
-function closeModal(){
-  document.getElementById('modal').classList.remove('show');
-}
-
-/* 記帳 */
-
-function openLedger(id){
-  let t=state.transactions.find(x=>x.id===id);
-
-  openModal(t?'編輯紀錄':'新增記帳',`
-    <label>收支類型</label>
-    <select id="fType" onchange="ledgerCats()">
-      <option value="expense" ${t?.type!=='income'?'selected':''}>支出</option>
-      <option value="income" ${t?.type==='income'?'selected':''}>收入</option>
-    </select>
-
-    <label>名稱</label>
-    <input id="fName" value="${esc(t?.name||'')}" placeholder="例如：午餐">
-
-    <div class="formgrid">
-      <div>
-        <label>金額</label>
-        <input id="fAmount" type="number" min="0" value="${t?.amount||''}">
-      </div>
-      <div>
-        <label>日期</label>
-        <input id="fDate" type="date" value="${t?.date||dateNow()}">
-      </div>
-    </div>
-
-    <label>分類</label>
-    <select id="fCat"></select>
-
-    <label>備註</label>
-    <textarea id="fNote">${esc(t?.note||'')}</textarea>
-
-    <div id="budgetSelect"></div>
-
-    <button class="primary" onclick="saveTx('${t?.id||''}')">
-      儲存紀錄
-    </button>
-  `);
-
-  ledgerCats(t);
-}
-
-function ledgerCats(t){
-  let type=document.getElementById('fType').value;
-  let sel=document.getElementById('fCat');
-
-  let cats=type==='income'
-    ?state.incomeCats
-    :state.budgets.map(b=>b.name);
-
-  sel.innerHTML=cats.map(c=>`
-    <option ${t?.category===c?'selected':''}>${esc(c)}</option>
-  `).join('');
-
-  let bs=document.getElementById('budgetSelect');
-
-  bs.innerHTML=type==='expense'
-    ?'<label>扣除預算分類</label><select id="fBudget">'+
-      state.budgets.map(b=>`
-        <option value="${b.id}" ${t?.budgetId===b.id?'selected':''}>
-          ${esc(b.name)}（剩餘 ${money(
-            currentBudget(b.id)+(t?.budgetId===b.id?t.amount:0)
-          )}）
-        </option>
-      `).join('')+'</select>'
-    :'';
-}
-
-async function saveTx(id){
-  let old=state.transactions.find(t=>t.id===id);
-  let type=document.getElementById('fType').value;
-  let amount=Number(document.getElementById('fAmount').value);
-
-  if(!document.getElementById('fName').value.trim()||!amount||amount<0){
-    alert('請填寫名稱與有效金額');
-    return;
-  }
-
-  let category=document.getElementById('fCat').value;
-  let budgetId=type==='expense'
-    ?document.getElementById('fBudget').value
-    :null;
-
-  if(type==='expense'){
-    let avail=currentBudget(budgetId)+
-      (old?.type==='expense'&&old.budgetId===budgetId?old.amount:0);
-
-    if(amount>avail){
-      alert('金額超過此分類可用預算');
-      return;
-    }
-  }
-
-  if(old){
-    state.transactions=state.transactions.filter(x=>x.id!==id);
-  }
-
-  state.transactions.push({
-    id:id||uid(),
-    type,
-    name:document.getElementById('fName').value.trim(),
-    amount,
-    date:document.getElementById('fDate').value,
-    category,
-    budgetId,
-    note:document.getElementById('fNote').value
-  });
-
-  await persist();
-  closeModal();
-  render();
-}
-
-async function deleteTx(id){
-  if(!confirm('確定刪除這筆紀錄？'))return;
-
-  state.transactions=state.transactions.filter(t=>t.id!==id);
-
-  await persist();
-  render();
-}
-
-function editTx(id){
-  openLedger(id);
-}
-
-/* 基金與目標 */
-
-function savingList(type){
-  return state.savings.filter(x=>x.type===type).map(x=>`
-    <details class="item">
-      <summary>
-        <b>${esc(x.name)}</b>
-        <span class="pill">${money(x.saved)} / ${money(x.target)}</span>
-      </summary>
-
-      <div class="progress">
-        <span style="width:${Math.min(
-          100,x.saved/Math.max(1,x.target)*100
-        )}%"></span>
-      </div>
-
-      <p class="sub">${esc(x.note||'')}</p>
-
-      <button class="soft smallbtn" onclick="deposit('${x.id}')">＋ 存入</button>
-      <button class="soft smallbtn" onclick="editSaving('${x.id}')">編輯</button>
-      <button class="danger smallbtn" onclick="deleteSaving('${x.id}')">刪除</button>
-
-      ${(x.history||[]).map(h=>`
-        <div class="sub item">
-          ${h.date} · ${money(h.amount)} · ${esc(h.note||'')}
-        </div>
-      `).join('')}
-    </details>
-  `).join('')||'<div class="empty">目前沒有項目</div>';
-}
-
-function openSaving(){
-  openModal('新增基金／目標',`
-    <label>類型</label>
-    <select id="svType">
-      <option value="fund">基金｜必需品</option>
-      <option value="goal">目標｜想要的東西</option>
-    </select>
-
-    <label>名稱</label>
-    <input id="svName" placeholder="例如：隱形眼鏡">
-
-    <label>目標金額</label>
-    <input id="svTarget" type="number" min="1">
-
-    <label>備註</label>
-    <textarea id="svNote"></textarea>
-
-    <button class="primary" onclick="saveSaving()">建立項目</button>
-  `);
-}
-
-function editSaving(id){
-  let x=state.savings.find(a=>a.id===id);
-
-  openModal('編輯項目',`
-    <label>名稱</label>
-    <input id="svName" value="${esc(x.name)}">
-
-    <label>目標金額</label>
-    <input id="svTarget" type="number" value="${x.target}">
-
-    <label>備註</label>
-    <textarea id="svNote">${esc(x.note||'')}</textarea>
-
-    <button class="primary" onclick="updateSaving('${id}')">儲存</button>
-  `);
-}
-
-async function saveSaving(){
-  let name=document.getElementById('svName').value.trim();
-  let target=Number(document.getElementById('svTarget').value);
-
-  if(!name||target<=0){
-    alert('請填寫項目名稱與目標金額');
-    return;
-  }
-
-  state.savings.push({
-    id:uid(),
-    type:document.getElementById('svType').value,
-    name,
-    target,
-    saved:0,
-    note:document.getElementById('svNote').value,
-    history:[]
-  });
-
-  await persist();
-  closeModal();
-  render();
-}
-
-async function updateSaving(id){
-  let x=state.savings.find(a=>a.id===id);
-
-  x.name=document.getElementById('svName').value;
-  x.target=Number(document.getElementById('svTarget').value);
-  x.note=document.getElementById('svNote').value;
-
-  await persist();
-  closeModal();
-  render();
-}
-
-async function deleteSaving(id){
-  if(confirm('確定刪除這個項目？存入紀錄也會一併刪除。')){
-    state.savings=state.savings.filter(x=>x.id!==id);
-    await persist();
-    render();
-  }
-}
-
-function deposit(id){
-  let x=state.savings.find(a=>a.id===id);
-  let available=state.budgets.filter(b=>currentBudget(b.id)>0);
-
-  if(!available.length){
-    alert('目前沒有可用預算來源');
-    return;
-  }
-
-  openModal('存入 '+x.name,`
-    <label>由哪個預算存入</label>
-    <select id="dpBudget">
-      ${available.map(b=>`
-        <option value="${b.id}">
-          ${esc(b.name)} · 剩餘 ${money(currentBudget(b.id))}
-        </option>
-      `).join('')}
-    </select>
-
-    <label>存入金額</label>
-    <input id="dpAmount" type="number" min="1">
-
-    <label>這次存入的原因</label>
-    <textarea id="dpNote"></textarea>
-
-    <button class="primary" onclick="saveDeposit('${id}')">確認存入</button>
-  `);
-}
-
-async function saveDeposit(id){
-  let b=document.getElementById('dpBudget').value;
-  let a=Number(document.getElementById('dpAmount').value);
-  let x=state.savings.find(s=>s.id===id);
-
-  if(a<=0||a>currentBudget(b)){
-    alert('請確認金額沒有超過可用預算');
-    return;
-  }
-
-  x.saved+=a;
-
-  x.history.push({
-    id:uid(),
-    budgetId:b,
-    amount:a,
-    date:dateNow(),
-    note:document.getElementById('dpNote').value
-  });
-
-  await persist();
-  closeModal();
-  render();
-}
-
-/* 購物管理 */
-
-function renderShopping(){
-  let names=[
-    '急需購買',
-    '願望清單',
-    '一般購物清單',
-    '想買但不急'
-  ];
-
-  let html='';
-
-  for(let i=0;i<4;i++){
-    let arr=state.shopping.filter(x=>x.quad===i&&!x.bought);
-
-    html+=`
-      <div class="quadbox">
-        <h3>${names[i]}</h3>
-        ${arr.map(x=>`
-          <div class="item">
-            <b>${esc(x.name)}</b>
-            <div class="sub">${money(x.price)}</div>
-            <div class="actions">
-              <button class="soft smallbtn" onclick="shopDetail('${x.id}')">查看</button>
-              <button class="soft smallbtn" onclick="moveShop('${x.id}')">移動</button>
-            </div>
-          </div>
-        `).join('')||'<span class="sub">尚無商品</span>'}
-      </div>
-    `;
-  }
-
-  document.getElementById('quad').innerHTML=html;
-
-  let bought=state.shopping.filter(x=>x.bought);
-
-  document.getElementById('boughtList').innerHTML=
-    bought.map(x=>`
-      <div class="item row">
-        <span>${esc(x.name)} · ${money(x.actual||0)}</span>
-        <button class="soft smallbtn" onclick="shopDetail('${x.id}')">查看</button>
-      </div>
-    `).join('')||'<div class="empty">尚無已購買商品</div>';
-
-  document.getElementById('savedAmount').textContent=money(
-    bought.reduce((s,x)=>s+Math.max(0,x.price-(x.actual||0)),0)
-  );
-}
-
-function openShop(){
-  openModal('新增購物項目',`
-    <label>商品名稱</label>
-    <input id="shName">
-
-    <label>預估價格</label>
-    <input id="shPrice" type="number" min="0">
-
-    <label>放入象限</label>
-    <select id="shQuad">
-      <option value="0">急需購買</option>
-      <option value="1">願望清單</option>
-      <option value="2">一般購物清單</option>
-      <option value="3">想買但不急</option>
-    </select>
-
-    <label>照片</label>
-    <input id="shPhoto" type="file" accept="image/*">
-
-    <label>冷靜期</label>
-    <select id="shCool">
-      <option value="7">7 天</option>
-      <option value="14">14 天</option>
-      <option value="30">30 天</option>
-    </select>
-
-    <label>備註／網址</label>
-    <textarea id="shNote"></textarea>
-
-    <button class="primary" onclick="saveShop()">新增商品</button>
-  `);
-}
-
-async function saveShop(){
-  let name=document.getElementById('shName').value.trim();
-  let price=Number(document.getElementById('shPrice').value);
-
-  if(!name){
-    alert('請輸入商品名稱');
-    return;
-  }
-
-  let file=document.getElementById('shPhoto').files[0];
-  let photo=file?await fileData(file):'';
-
-  state.shopping.push({
-    id:uid(),
-    name,
-    price,
-    quad:Number(document.getElementById('shQuad').value),
-    cool:Number(document.getElementById('shCool').value),
-    added:dateNow(),
-    note:document.getElementById('shNote').value,
-    photo,
-    bought:false
-  });
-
-  await persist();
-  closeModal();
-  render();
-}
-
-function fileData(f){
-  return new Promise(r=>{
-    let rd=new FileReader();
-    rd.onload=()=>r(rd.result);
-    rd.readAsDataURL(f);
-  });
-}
-
-function shopDetail(id){
-  let x=state.shopping.find(a=>a.id===id);
-
-  openModal(x.name,`
-    ${x.photo?`<img class="photo" src="${x.photo}">`:''}
-
-    <p>${money(x.price)} · 冷靜期 ${x.cool||7} 天</p>
-    <p class="sub">${esc(x.note||'')}</p>
-
-    ${x.bought?`
-      <label>實際購買價格</label>
-      <input id="actual" type="number" value="${x.actual||0}">
-      <button class="primary" onclick="updateActual('${id}')">更新價格</button>
-      <button class="soft" onclick="unbuy('${id}')">移回清單</button>
-    `:`
-      <button class="primary" onclick="markBought('${id}')">標記已購買</button>
-    `}
-
-    <button class="danger" onclick="removeShop('${id}')">刪除商品</button>
-  `);
-}
-
-async function markBought(id){
-  let x=state.shopping.find(a=>a.id===id);
-  x.bought=true;
-  x.actual=x.price;
-  await persist();
-  closeModal();
-  render();
-}
-
-async function updateActual(id){
-  let x=state.shopping.find(a=>a.id===id);
-  x.actual=Number(document.getElementById('actual').value);
-  await persist();
-  closeModal();
-  render();
-}
-
-async function unbuy(id){
-  let x=state.shopping.find(a=>a.id===id);
-  x.bought=false;
-  await persist();
-  closeModal();
-  render();
-}
-
-async function removeShop(id){
-  if(confirm('確定刪除商品？')){
-    state.shopping=state.shopping.filter(x=>x.id!==id);
-    await persist();
-    closeModal();
-    render();
-  }
-}
-
-function moveShop(id){
-  let x=state.shopping.find(a=>a.id===id);
-
-  openModal('移動商品',`
-    <label>選擇象限</label>
-    <select id="moveQuad">
-      <option value="0">急需購買</option>
-      <option value="1">願望清單</option>
-      <option value="2">一般購物清單</option>
-      <option value="3">想買但不急</option>
-    </select>
-    <button class="primary" onclick="doMove('${id}')">移動</button>
-  `);
-
-  document.getElementById('moveQuad').value=x.quad;
-}
-
-async function doMove(id){
-  state.shopping.find(a=>a.id===id).quad=
-    Number(document.getElementById('moveQuad').value);
-
-  await persist();
-  closeModal();
-  render();
-}
-
-/* 設定 */
-
-function renderSettings(){
-  document.getElementById('budgetSettings').innerHTML=
-    state.budgets.map(b=>`
-      <div class="item">
-        <div class="row">
-          <b>${esc(b.name)}</b>
-          <span>${money(b.amount)}</span>
-        </div>
-        <div class="actions">
-          <button class="soft smallbtn" onclick="editBudget('${b.id}')">編輯</button>
-          <button class="danger smallbtn" onclick="deleteBudget('${b.id}')">刪除</button>
-        </div>
-      </div>
-    `).join('');
-
-  document.getElementById('incomeCats').innerHTML=
-    state.incomeCats.map((c,i)=>`
-      <div class="item row">
-        ${esc(c)}
-        <button class="danger smallbtn" onclick="removeIncomeCat(${i})">刪除</button>
-      </div>
-    `).join('');
-
-  document.getElementById('budgetDay').value=state.budgetDay||1;
-}
-
-function addBudget(){
-  openModal('新增預算分類',`
-    <label>分類名稱</label>
-    <input id="bName">
-
-    <label>每月分配金額</label>
-    <input id="bAmount" type="number" min="0">
-
-    <button class="primary" onclick="saveBudget()">新增</button>
-  `);
-}
-
-async function saveBudget(){
-  let n=document.getElementById('bName').value.trim();
-  let a=Number(document.getElementById('bAmount').value);
-
-  if(!n||a<0){
-    alert('請輸入分類與金額');
-    return;
-  }
-
-  state.budgets.push({id:uid(),name:n,amount:a});
-
-  await persist();
-  closeModal();
-  render();
-}
-
-function editBudget(id){
-  let b=state.budgets.find(x=>x.id===id);
-
-  openModal('編輯預算分類',`
-    <label>分類名稱</label>
-    <input id="bName" value="${esc(b.name)}">
-
-    <label>每月分配金額</label>
-    <input id="bAmount" type="number" value="${b.amount}">
-
-    <button class="primary" onclick="updateBudget('${id}')">儲存</button>
-  `);
-}
-
-async function updateBudget(id){
-  let b=state.budgets.find(x=>x.id===id);
-  let old=b.name;
-
-  b.name=document.getElementById('bName').value.trim();
-  b.amount=Number(document.getElementById('bAmount').value);
-
-  state.transactions.forEach(t=>{
-    if(t.category===old&&t.type==='expense')t.category=b.name;
-  });
-
-  await persist();
-  closeModal();
-  render();
-}
-
-async function deleteBudget(id){
-  if(
-    state.transactions.some(t=>t.budgetId===id)||
-    state.savings.some(x=>x.history.some(h=>h.budgetId===id))
-  ){
-    alert('此分類已有歷史紀錄，為保留帳目暫時不能刪除。');
-    return;
-  }
-
-  if(confirm('確定刪除分類？')){
-    state.budgets=state.budgets.filter(x=>x.id!==id);
-    await persist();
-    render();
-  }
-}
-
-function addIncomeCat(){
-  let n=prompt('新增收入分類名稱');
-
-  if(n?.trim()){
-    state.incomeCats.push(n.trim());
-    persist().then(render);
-  }
-}
-
-function removeIncomeCat(i){
-  if(confirm('刪除此收入分類？')){
-    state.incomeCats.splice(i,1);
-    persist().then(render);
-  }
-}
-
-function saveDay(v){
-  state.budgetDay=Math.max(1,Math.min(28,Number(v)||1));
-  persist();
-}
-
-/* 備份與還原 */
-
-function backup(){
-  let blob=new Blob([JSON.stringify(state)],{
-    type:'application/json'
-  });
-
-  let a=document.createElement('a');
-  a.href=URL.createObjectURL(blob);
-  a.download='my-little-journal-backup.json';
-  a.click();
-  URL.revokeObjectURL(a.href);
-}
-
-function restore(e){
-  let f=e.target.files[0];
-  if(!f)return;
-
-  let r=new FileReader();
-
-  r.onload=async()=>{
-    try{
-      let d=JSON.parse(r.result);
-
-      if(!Array.isArray(d.transactions)||!Array.isArray(d.budgets)){
-        throw 0;
-      }
-
-      state=d;
-      await persist();
-      render();
-      alert('備份還原完成');
-    }catch(_){
-      alert('檔案格式不正確');
-    }
+function parseMath(s){
+ try{
+  let t=s.replace(/\s/g,''),i=0;
+  const number=()=>{
+   let st=i;
+   while(i<t.length&&/[0-9.]/.test(t[i]))i++;
+   let v=t.slice(st,i);
+   if(!v||v.split('.').length>2)throw 0;
+   return Number(v);
   };
-
-  r.readAsText(f);
+  const factor=()=>{
+   if(t[i]==='+'){i++;return factor()}
+   if(t[i]==='-'){i++;return-factor()}
+   if(t[i]==='('){i++;let v=add();if(t[i++]!==')')throw 0;return v}
+   return number();
+  };
+  const mul=()=>{
+   let v=factor();
+   while(t[i]==='*'||t[i]==='/'){
+    let op=t[i++],b=factor();
+    if(op==='/'&&b===0)throw 0;
+    v=op==='*'?v*b:v/b;
+   }
+   return v;
+  };
+  const add=()=>{
+   let v=mul();
+   while(t[i]==='+'||t[i]==='-'){
+    let op=t[i++],b=mul();
+    v=op==='+'?v+b:v-b;
+   }
+   return v;
+  };
+  let v=add();
+  return i===t.length&&Number.isFinite(v)?Math.round(v*100)/100:null;
+ }catch{return null}
 }
-
-function resetAll(){
-  if(confirm('確定清除全部資料？此動作無法復原，請先備份。')){
-    state={
-      transactions:[],
-      budgets:[],
-      incomeCats:[],
-      savings:[],
-      shopping:[],
-      budgetDay:1
-    };
-
-    persist().then(render);
-  }
+function appendOp(op){$('amount').value+=op;calculate()}
+function calculate(){
+ let v=parseMath($('amount').value);
+ $('preview').textContent=v===null?'請輸入完整算式':'＝ '+money(v);
+ return v;
 }
-
-/* 離線功能 */
-
-if('serviceWorker'in navigator && location.protocol.startsWith('http')){
-  window.addEventListener('load',()=>{
-    navigator.serviceWorker.register('./sw.js').catch(()=>{});
-  });
+function addRecord(){
+ let amount=calculate();
+ if(amount===null||amount<=0)return alert('請輸入正確金額');
+ data.records.unshift({
+  id:Date.now(),type:data.type,amount,
+  category:$('category').value,
+  source:$('source').value,
+  date:$('recordDate').value||today(),
+  memo:$('memo').value
+ });
+ $('amount').value='';$('memo').value='';
+ save();render();
 }
-
-load();
+function addTask(){
+ let name=prompt('今天想完成什麼？');
+ if(name){data.tasks.push({id:Date.now(),name,done:false});save();render()}
+}
+function saveNote(){data.notes[today()]=$('dailyNote').value;save();alert('已儲存')}
+function addShop(){
+ let name=prompt('商品名稱？');if(!name)return;
+ let price=Number(prompt('商品價格？')||0);
+ let q=Number(prompt('放入哪個象限？\n0 想要且需要\n1 需要但不急\n2 想要但可等等\n3 暫時不買')||0);
+ data.shops.push({id:Date.now(),name,price,quad:Math.max(0,Math.min(3,q))});
+ save();render();
+}
+function addGoal(){
+ let name=prompt('基金名稱？');if(!name)return;
+ let target=Number(prompt('目標金額？')||0);
+ data.goals.push({id:Date.now(),name,target,balance:0});
+ save();render();
+}
+function deposit(id){
+ let g=data.goals.find(x=>x.id===id);
+ let n=Number(prompt('存入金額？')||0);
+ if(n>0){g.balance+=n;save();render()}
+}
+function withdraw(id){
+ let g=data.goals.find(x=>x.id===id);
+ let n=Number(prompt('提領金額？')||0);
+ if(n>0&&n<=g.balance){g.balance-=n;save();render()}
+}
+function addBudget(){
+ data.budgets.push({name:'新分類',amount:0});renderBudget();
+}
+function renderBudget(){
+ $('budgetSettings').innerHTML=data.budgets.map((b,i)=>`
+ <div class="item">
+ <input class="field" data-name="${i}" value="${b.name}">
+ <input class="field" type="number" data-amount="${i}" value="${b.amount}">
+ </div>`).join('');
+}
+function saveBudgets(){
+ document.querySelectorAll('[data-name]').forEach(x=>data.budgets[+x.dataset.name].name=x.value);
+ document.querySelectorAll('[data-amount]').forEach(x=>data.budgets[+x.dataset.amount].amount=Math.max(0,+x.value||0));
+ save();render();alert('預算已儲存');
+}
+function toggleDecor(){
+ data.decor=$('decor').checked;
+ document.querySelectorAll('.deco').forEach(x=>x.classList.toggle('hidden',!data.decor));
+ save();
+}
+const themeList=[
+ ['奶油灰','#f7f5f1','#c4b8ab','#eee9e1'],
+ ['奶油粉','#fbf2f1','#d6a8a6','#f4e3e2'],
+ ['薰衣草紫','#f5f2fa','#b6a8cf','#eae4f4'],
+ ['雲朵汽水','#f1f7f8','#9dbdc5','#e2eff1'],
+ ['奶油布丁','#faf6eb','#c9ae75','#f1e8ce'],
+ ['薄荷兔兔','#f1f6f1','#9eb9a4','#e3eee4'],
+ ['摩卡可可','#f4f0eb','#a98c78','#e9ded4'],
+ ['櫻桃派對','#fbf2f2','#c77d84','#f3e1e3'],
+ ['蜜桃烏龍','#faf3ed','#d6a58d','#f2e4d8'],
+ ['櫻花日記','#faf3f7','#cda6bd','#f1e4ed'],
+ ['海鹽奶蓋','#f2f5f5','#9caeb0','#e4ebeb'],
+ ['午夜星空','#30333d','#b5a9d2','#454957']
+];
+function setTheme(name){
+ let t=themeList.find(x=>x[0]===name);
+ data.theme=name;
+ document.documentElement.style.setProperty('--bg',t[1]);
+ document.documentElement.style.setProperty('--accent',t[2]);
+ document.documentElement.style.setProperty('--soft',t[3]);
+ save();renderThemes();
+}
+function renderThemes(){
+ $('themes').innerHTML=themeList.map(t=>`
+ <button class="theme" onclick="setTheme('${t[0]}')">
+ <div style="height:22px;border-radius:8px;background:${t[1]};border:2px solid ${t[2]}"></div>
+ ${t[0]} ${data.theme===t[0]?'✓':''}
+ </button>`).join('');
+}
+function backup(){
+ let a=document.createElement('a');
+ a.href=URL.createObjectURL(new Blob([JSON.stringify(data)],{type:'application/json'}));
+ a.download='my-little-journal-backup.json';a.click();
+ URL.revokeObjectURL(a.href);
+}
+function restore(e){
+ let f=e.target.files[0];if(!f)return;
+ let r=new FileReader();
+ r.onload=()=>{
+  try{data={...data,...JSON.parse(r.result)};save();render();alert('備份匯入成功')}
+  catch{alert('檔案格式錯誤')}
+ };
+ r.readAsText(f);
+}
+function render(){
+ let month=today().slice(0,7);
+ let records=data.records.filter(x=>x.date.startsWith(month));
+ let income=records.filter(x=>x.type==='income').reduce((s,x)=>s+x.amount,0);
+ let expense=records.filter(x=>x.type==='expense').reduce((s,x)=>s+x.amount,0);
+ $('income').textContent=money(income);
+ $('expense').textContent=money(expense);
+ $('remaining').textContent=money(data.budgets.reduce((s,b)=>s+b.amount,0)-expense);
+ $('fundTotal').textContent=money(data.goals.reduce((s,g)=>s+g.balance,0));
+ $('records').innerHTML=data.records.map(r=>`
+ <div class="item"><div class="grow"><b>${r.category}</b><div class="sub">${r.date} ${r.memo||''}</div></div>
+ <b>${r.type==='expense'?'-':'+'}${money(r.amount)}</b></div>`).join('')||'<div class="sub">尚無紀錄</div>';
+ $('source').innerHTML=data.budgets.filter(x=>x.amount>0).map(x=>`<option>${x.name}</option>`).join('');
+ $('shops').innerHTML=data.shops.map(s=>`<div class="item"><div class="grow"><b>${s.name}</b><div class="sub">${money(s.price)}</div></div></div>`).join('')||'<div class="sub">尚無商品</div>';
+ for(let i=0;i<4;i++){
+  $('q'+i).innerHTML=data.shops.filter(s=>s.quad===i).map(s=>`<div class="sub">${s.name} · ${money(s.price)}</div>`).join('')||'<div class="sub">尚無商品</div>';
+ }
+ $('goalsList').innerHTML=data.goals.map(g=>`
+ <div class="item"><div class="grow"><b>${g.name}</b>
+ <div class="sub">${money(g.balance)} / ${money(g.target)} · ${g.target?Math.round(g.balance/g.target*100):0}%</div>
+ <div class="progress"><i style="width:${Math.min(100,g.target?g.balance/g.target*100:0)}%"></i></div>
+ ${g.balance>=g.target?'<div class="sub">已達成！超額存款也會保留。</div>':''}
+ </div><div><button class="btn" onclick="deposit(${g.id})">存入</button>
+ <button class="btn secondary" onclick="withdraw(${g.id})">提領</button></div></div>`).join('');
+ $('tasks').innerHTML=data.tasks.map(t=>`
+ <label class="item"><input type="checkbox" ${t.done?'checked':''} onchange="toggleTask(${t.id})">${t.name}</label>`).join('')||'<div class="sub">今天還沒有待辦。</div>';
+ $('dailyNote').value=data.notes[today()]||'';
+ $('recordDate').value=today();
+ renderBudget();renderThemes();
+}
+function toggleTask(id){
+ let t=data.tasks.find(x=>x.id===id);t.done=!t.done;save();render();
+}
+$('date').textContent=new Date().toLocaleDateString('zh-TW');
+$('homeDate').textContent=new Date().toLocaleDateString('zh-TW');
+init();
 </script>
-
 </body>
 </html>
